@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final productAddedToCartModal = productAddedToCartModalFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -17,12 +14,12 @@ class ProductAddedToCartModal {
 
   String message;
   String status;
-  Cart cart;
+  ProductCart cart;
 
   factory ProductAddedToCartModal.fromJson(Map<String, dynamic> json) => ProductAddedToCartModal(
     message: json["message"],
     status: json["status"],
-    cart: Cart.fromJson(json["cart"]),
+    cart: ProductCart.fromJson(json["cart"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +29,8 @@ class ProductAddedToCartModal {
   };
 }
 
-class Cart {
-  Cart({
+class ProductCart {
+  ProductCart({
     this.userEmail,
     this.productId,
     this.quantity,
@@ -42,7 +39,7 @@ class Cart {
     this.package,
     this.packagePrice,
     this.delivery,
-    this.id,
+
   });
 
   String? userEmail;
@@ -53,9 +50,9 @@ class Cart {
   String? package;
   String? packagePrice;
   String? delivery;
-  int? id;
 
-  factory Cart.fromJson(Map<String, dynamic> json) => Cart(
+
+  factory ProductCart.fromJson(Map<String, dynamic> json) => ProductCart(
     userEmail: json["user_email"],
     productId: json["product_id"],
     quantity: json["quantity"],
@@ -64,11 +61,10 @@ class Cart {
     package: json["package"],
     packagePrice: json["package_price"],
     delivery: json["delivery"],
-    id: json["id"],
+
   );
 
   Map<String, dynamic> toJson() => {
-    "user_email": userEmail,
     "product_id": productId,
     "quantity": quantity,
     "rent": rent,
@@ -76,6 +72,5 @@ class Cart {
     "package": package,
     "package_price": packagePrice,
     "delivery": delivery,
-    "id": id,
   };
 }

@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:purpleavapp/Modal/renter_model/add_to_cart_modal.dart';
+import 'package:purpleavapp/Services/ApiServices.dart';
 
 import '../../Modal/renter_model/product_model.dart';
 import '../../Modal/renter_model/search_modal.dart';
@@ -782,30 +784,50 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(height: 20,),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  Container(
-                    alignment: Alignment.center,
-                    width: 363,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Color(0xff5600d4),
-                    ),
-                    child: Text(
-                      "Add to Cart",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: ()async{
+                  bool? status = await productAddToCart(ProductCart(
+                    productId:widget.model.id.toString() ,
+                    quantity:"1" ,
+                    rent: rentType(),
+                    rentPrice:rentPrice() ,
+                    package: packageType(),
+                    packagePrice: packagePrice(),
+                    delivery: deliveryMethod(),
+
+                  ));
+                  if(status!){
+                    debugPrint("added");
+
+                  }else{
+                    debugPrint("fuck you");
+                  }
+                },
+                child: Row(
+
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:[
+                    Container(
+                      alignment: Alignment.center,
+                      width: 363,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Color(0xff5600d4),
+                      ),
+                      child: Text(
+                        "Add to Cart",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: "Lato",
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
 
 
@@ -819,4 +841,71 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     );
   }
+
+  String rentType(){
+    if(value1 == true){
+      return "Three Day";
+    }else if(value2 == true){
+      return "Weekend";
+    }else if(value3 == true){
+      return "One Day";
+    }else if(value4 == true){
+      return "Two Day";
+    }else if(value5 == true){
+      return "Three Day";
+    }else if(value6 == true){
+      return "Weekly";
+    }else{
+      return "One Day";
+    }
+  }
+  String rentPrice(){
+    if(value1 == true){
+      return widget.model.threeDayPrice!;
+    }else if(value2 == true){
+      return widget.model.weekendPrice!;
+    }else if(value3 == true){
+      return widget.model.oneDayPrice!;
+    }else if(value4 == true){
+      return widget.model.twoDayPrice!;
+    }else if(value5 == true){
+      return widget.model.threeDayPrice!;
+    }else if(value6 == true){
+      return widget.model.weeklyPrice!;
+    }else{
+      return widget.model.oneDayPrice!;
+    }
+  }
+  String deliveryMethod(){
+    if(value9 == true){
+     return "Pick up";
+    }else if(value10 == true){
+      return "Shipping";
+    }else{
+      return "Pick up";
+    }
+  }
+
+  String packageType(){
+    if(value7 == true){
+      return "Package 1";
+    }else if(value8 == true){
+      return "Package 2";
+    }else{
+      return "Package 1";
+    }
+  }
+  String packagePrice(){
+    if(value7 == true){
+      return widget.model.package1Price!;
+    }else if(value8 == true){
+      return widget.model.package2Price!;
+    }else{
+      return widget.model.package1Price!;
+    }
+  }
+
+
+
+
 }
