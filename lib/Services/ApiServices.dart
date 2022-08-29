@@ -370,3 +370,22 @@ Future<dynamic> productAddToCart(ProductCart model) async {
     throw Exception('Failed to load data');
   }
 }
+
+Future deleteFromCart(int id) async {
+  String url = "https://purpleapp.omkatech.com/api/cart/$id/delete";
+
+  print(id);
+
+  final response = await http.get(
+    Uri.parse(url),
+  );
+
+  print(response.body);
+
+  if (response.statusCode == 200) {
+    var jsonResponse = json.decode(response.body);
+    print(jsonResponse);
+  }
+  getAllProducts();
+  print('get products  hit');
+}
