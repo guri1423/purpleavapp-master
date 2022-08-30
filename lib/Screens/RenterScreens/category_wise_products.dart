@@ -65,7 +65,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                     return ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data!.category.product!.length,
+                        itemCount: snapshot.data!.category!.data!.length,
                         itemBuilder: (context,index){
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -104,7 +104,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                                 onTap: (){
                                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
                                                 },
-                                                child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.category.product![index].productImages![index].url}"),
+                                                child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.category!.data![index].productImages![index].url}"),
                                               ),
                                             ),
 
@@ -113,22 +113,17 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                         Spacer(),
                                         Column(
                                           children: [
-                                            GestureDetector(onTap: (){
-                                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
-
-                                            },
-                                              child: Text( snapshot.data!.category.product![index].name!,
-                                                style: TextStyle(
-                                                  color: Color(0xff727171),
-                                                  fontSize: 22,
-                                                  fontFamily: "Lato",
-                                                  fontWeight: FontWeight.w700,
-                                                ),
+                                            Text( snapshot.data!.category!.data![index].name!,
+                                              style: TextStyle(
+                                                color: Color(0xff727171),
+                                                fontSize: 22,
+                                                fontFamily: "Lato",
+                                                fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                             SizedBox(height: 20,),
                                             Text(
-                                              "Rent -\$${snapshot.data!.category.product![index].weekendPrice}",
+                                              "Rent -\$${snapshot.data!.category!.data![index].weekendPrice}",
                                               style: TextStyle(
                                                 color: Color(0xff0a0a0a),
                                                 fontSize: 18,
@@ -137,27 +132,32 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                               ),
                                             ),
                                             SizedBox(height: 30,),
-                                            Container(
-                                              width: 186,
-                                              height: 26,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(3),
-                                                color: Color(0xff5600d4),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: const[
-                                                  Text(
-                                                    "Add to Cart",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontFamily: "Lato",
-                                                      fontWeight: FontWeight.w600,
+                                            GestureDetector(
+                                              onTap: (){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.category!.data![index],)));
+                                              },
+                                              child: Container(
+                                                width: 186,
+                                                height: 26,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(3),
+                                                  color: Color(0xff5600d4),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: const[
+                                                    Text(
+                                                      "Add to Cart",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily: "Lato",
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ],

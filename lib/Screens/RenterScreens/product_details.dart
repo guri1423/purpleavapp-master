@@ -1,14 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:purpleavapp/Modal/renter_model/add_to_cart_modal.dart';
+import 'package:purpleavapp/Modal/renter_model/category_search_modal.dart';
+import 'package:purpleavapp/Screens/RenterScreens/Cart_Screen.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
 
 import '../../Modal/renter_model/product_model.dart';
 import '../../Modal/renter_model/search_modal.dart';
 
 class ProductDetails extends StatefulWidget {
-  Datum model;
+  DataCategory model;
   ProductDetails({Key? key,
     required this.model
 
@@ -795,13 +798,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                     packagePrice: packagePrice(),
                     delivery: deliveryMethod(),
 
+
                   ));
                   if(status!){
                     debugPrint("added");
+                    Fluttertoast.showToast(msg: status.toString());
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => RenterCart()));
 
                   }else{
-                    debugPrint("fuck you");
+                    debugPrint("not added");
                   }
+
                 },
                 child: Row(
 

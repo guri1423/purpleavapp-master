@@ -125,7 +125,7 @@ class _ViewProductsState extends State<ViewProducts> {
 
                                               child: GestureDetector(
                                                 onTap: (){
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
+                                                  // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
                                                 },
                                                 child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.data[index].productImages![index].url}"),
                                               ),
@@ -137,7 +137,7 @@ class _ViewProductsState extends State<ViewProducts> {
                                         Column(
                                           children: [
                                             GestureDetector(onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
+                                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
 
                                             },
                                               child: Text(  snapshot.data!.data[index].name!,
@@ -160,27 +160,32 @@ class _ViewProductsState extends State<ViewProducts> {
                                               ),
                                             ),
                                             SizedBox(height: 30,),
-                                            Container(
-                                              width: 186,
-                                              height: 26,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(3),
-                                                color: Color(0xff5600d4),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: const[
-                                                  Text(
-                                                    "Add to Cart",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontFamily: "Lato",
-                                                      fontWeight: FontWeight.w600,
+                                            GestureDetector(
+                                              onTap: (){
+                                                // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
+                                              },
+                                              child: Container(
+                                                width: 186,
+                                                height: 26,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(3),
+                                                  color: Color(0xff5600d4),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: const[
+                                                    Text(
+                                                      "Add to Cart",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily: "Lato",
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ],

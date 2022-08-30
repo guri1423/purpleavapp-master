@@ -324,8 +324,7 @@ Future<GetCategoryProductModal> categorySearch(id) async {
   }
 }
 
-Future<GetProductAddedToCartModal?> productToCart(
-    GetProductAddedToCartModal model) async {
+Future<GetProductAddedToCartModal?> productToCart() async {
   print("guri");
   String url = "https://purpleapp.omkatech.com/api/cart";
   String? tokenValue = await _services.getToken();

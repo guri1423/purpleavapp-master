@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:purpleavapp/Screens/RenterScreens/address_enter.dart';
 import 'package:purpleavapp/Screens/RenterScreens/renter_review.dart';
 
 class RenterBooking extends StatefulWidget {
@@ -268,13 +269,18 @@ class _RenterBookingState extends State<RenterBooking> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        left: 297,
-                        top: 25.39,
-                        child: Container(
-                            width: 57,
-                            height: 57,
-                            child: Image.asset('images/cartimage.png')
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddressAdd()));
+                        },
+                        child: Positioned(
+                          left: 297,
+                          top: 25.39,
+                          child: Container(
+                              width: 57,
+                              height: 57,
+                              child: Image.asset('images/cartimage.png')
+                          ),
                         ),
                       ),
                       Positioned(

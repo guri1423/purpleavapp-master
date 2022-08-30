@@ -1,18 +1,21 @@
-
+// To parse this JSON data, do
+//
+//     final getCategoryProductModal = getCategoryProductModalFromJson(jsonString);
 
 import 'dart:convert';
 
 GetCategoryProductModal getCategoryProductModalFromJson(String str) => GetCategoryProductModal.fromJson(json.decode(str));
 
 
+
 class GetCategoryProductModal {
   GetCategoryProductModal({
-    required this.category,
-    required this.status,
+    this.category,
+    this.status,
   });
 
-  Category category;
-  String status;
+  Category? category;
+  String? status;
 
   factory GetCategoryProductModal.fromJson(Map<String, dynamic> json) => GetCategoryProductModal(
     category: Category.fromJson(json["category"]),
@@ -28,28 +31,28 @@ class Category {
     this.catName,
     this.createdAt,
     this.updatedAt,
-    this.product,
+    this.data,
   });
 
   int? id;
   String? catName;
   dynamic? createdAt;
   dynamic? updatedAt;
-  List<Product>? product;
+  List<DataCategory>? data;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     catName: json["cat_name"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
-    product: List<Product>.from(json["product"].map((x) => Product.fromJson(x))),
+    data: List<DataCategory>.from(json["data"].map((x) => DataCategory.fromJson(x))),
   );
 
 
 }
 
-class Product {
-  Product({
+class DataCategory {
+  DataCategory({
     this.id,
     this.name,
     this.serviceProviderId,
@@ -72,8 +75,6 @@ class Product {
     this.termsConditions,
     this.categoryId,
     this.deletedAt,
-    this.createdAt,
-    this.updatedAt,
     this.productImages,
     this.pickupAddress,
   });
@@ -100,12 +101,10 @@ class Product {
   String? termsConditions;
   String? categoryId;
   dynamic? deletedAt;
-  DateTime? createdAt;
-  DateTime? updatedAt;
   List<ProductImage>? productImages;
   PickupAddress? pickupAddress;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory DataCategory.fromJson(Map<String, dynamic> json) => DataCategory(
     id: json["id"],
     name: json["name"],
     serviceProviderId: json["service_provider_id"],
@@ -128,8 +127,6 @@ class Product {
     termsConditions: json["terms_conditions"],
     categoryId: json["category_id"],
     deletedAt: json["deleted_at"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
     productImages: List<ProductImage>.from(json["product_images"].map((x) => ProductImage.fromJson(x))),
     pickupAddress: PickupAddress.fromJson(json["pickup_address"]),
   );
@@ -173,7 +170,8 @@ class PickupAddress {
     this.postalCode,
     this.productId,
     this.bookingId,
-
+    this.createdAt,
+    this.updatedAt,
   });
 
   int? id;
@@ -185,7 +183,8 @@ class PickupAddress {
   String? postalCode;
   String? productId;
   dynamic? bookingId;
-
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory PickupAddress.fromJson(Map<String, dynamic> json) => PickupAddress(
     id: json["id"],
@@ -197,7 +196,8 @@ class PickupAddress {
     postalCode: json["postal_code"],
     productId: json["product_id"],
     bookingId: json["booking_id"],
-
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -210,7 +210,8 @@ class PickupAddress {
     "postal_code": postalCode,
     "product_id": productId,
     "booking_id": bookingId,
-
+    "created_at": createdAt!.toIso8601String(),
+    "updated_at": updatedAt!.toIso8601String(),
   };
 }
 
@@ -225,6 +226,7 @@ class ProductImage {
   int? id;
   String? url;
   String? productId;
+
 
 
   factory ProductImage.fromJson(Map<String, dynamic> json) => ProductImage(
