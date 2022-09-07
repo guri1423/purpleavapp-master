@@ -148,7 +148,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: const[
                                                     Text(
-                                                      "Add to Cart",
+                                                      "View Details",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 14,

@@ -18,13 +18,13 @@ class ProductAddedToCartModal {
 
   String? message;
   String? status;
-  AddCart? cart;
+  BookCart? cart;
   Address? address;
 
   factory ProductAddedToCartModal.fromJson(Map<String, dynamic> json) => ProductAddedToCartModal(
     message: json["message"],
     status: json["status"],
-    cart: AddCart.fromJson(json["cart"]),
+    cart: BookCart.fromJson(json["cart"]),
     address: Address.fromJson(json["address"]),
   );
 
@@ -45,6 +45,8 @@ class Address {
     this.city,
     this.postalCode,
     this.bookingId,
+    this.updatedAt,
+    this.createdAt,
     this.id,
   });
 
@@ -55,6 +57,8 @@ class Address {
   String? city;
   String? postalCode;
   int? bookingId;
+  DateTime? updatedAt;
+  DateTime? createdAt;
   int? id;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
@@ -65,6 +69,8 @@ class Address {
     city: json["city"],
     postalCode: json["postal_code"],
     bookingId: json["booking_id"],
+    updatedAt: DateTime.parse(json["updated_at"]),
+    createdAt: DateTime.parse(json["created_at"]),
     id: json["id"],
   );
 
@@ -80,54 +86,20 @@ class Address {
   };
 }
 
-class AddCart{
-  AddCart({
-    this.productId,
-    this.quantity,
-    this.rent,
-    this.startDate,
-    this.endDate,
-    this.rentPrice,
-    this.package,
-    this.packagePrice,
-    this.totalAmount,
-    this.delivery,
+class BookCart {
+  BookCart({
+    this.id,
   });
 
-  String? productId;
-  String? quantity;
-  String? rent;
-  dynamic? startDate;
-  dynamic? endDate;
-  String? rentPrice;
-  String? package;
-  String? packagePrice;
-  String? totalAmount;
-  String? delivery;
 
-  factory AddCart.fromJson(Map<String, dynamic> json) => AddCart(
-    productId: json["product_id"],
-    quantity: json["quantity"],
-    rent: json["rent"],
-    startDate: json["start_date"],
-    endDate: json["end_date"],
-    rentPrice: json["rent_price"],
-    package: json["package"],
-    packagePrice: json["package_price"],
-    totalAmount: json["total_amount"],
-    delivery: json["delivery"],
+  String? id;
+
+  factory BookCart.fromJson(Map<String, dynamic> json) => BookCart(
+
+    id: json["product_id[]"],
   );
 
   Map<String, dynamic> toJson() => {
-    "product_id": productId,
-    "quantity": quantity,
-    "rent": rent,
-    "start_date": startDate,
-    "end_date": endDate,
-    "rent_price": rentPrice,
-    "package": package,
-    "package_price": packagePrice,
-    "total_amount": totalAmount,
-    "delivery": delivery,
+    "product_id[]": id,
   };
 }

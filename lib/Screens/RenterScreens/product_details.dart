@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +9,7 @@ import 'package:purpleavapp/Modal/renter_model/category_search_modal.dart';
 import 'package:purpleavapp/Screens/RenterScreens/Cart_Screen.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
 
+import '../../Modal/renter_model/book_product_from_cart.dart';
 import '../../Modal/renter_model/product_model.dart';
 import '../../Modal/renter_model/search_modal.dart';
 
@@ -18,8 +21,10 @@ class ProductDetails extends StatefulWidget {
   }) : super(key: key);
 
   @override
+
   State<ProductDetails> createState() => _ProductDetailsState();
 }
+
 
 class _ProductDetailsState extends State<ProductDetails> {
   bool _ischecked=false;
@@ -33,6 +38,32 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool value8= false;
   bool value9= false;
   bool value10= false;
+
+  final TextEditingController _landmark = TextEditingController();
+  final TextEditingController _address = TextEditingController();
+  final TextEditingController _country = TextEditingController();
+  final TextEditingController _state = TextEditingController();
+  final TextEditingController _city = TextEditingController();
+  final TextEditingController _postal = TextEditingController();
+
+  DateTime date= DateTime(2022,12,24);
+  DateTime returnDate= DateTime(2023,12,29);
+
+
+
+  int counter = 1;
+
+   incrementCounter(){
+    setState(() {
+      counter++;
+    });
+  }
+   decrementCounter(){
+     setState(() {
+       counter--;
+       counter = max(1, counter - 10);
+     });
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -266,27 +297,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     SizedBox(width: 32),
                     Container(
-                      width: 100,
+                      width: 120,
                       height: 28,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children:[
-                          Container(
-                            width: 34,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xffcacaca), width: 1, ),
-                              color: Color(0xffeaeaea),
-                            ),
-                            child: Icon(Icons.remove),
+                          GestureDetector(
 
+                            onTap: decrementCounter,
+                            child: Container(
+                              width: 34,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xffcacaca), width: 1, ),
+                                color: Color(0xffeaeaea),
+                              ),
+                              child: Icon(Icons.remove),
+
+                            ),
                           ),
 
                           SizedBox(width: 10.50),
                           Text(
-                            "1",
+                            '$counter',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color(0xff2d2d2d),
@@ -296,16 +331,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                           ),
                           SizedBox(width: 10.50),
-                          Container(
-                            width: 34,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xffcacaca), width: 1, ),
-                              color: Color(0xffeaeaea),
+                          GestureDetector(
+                            onTap: incrementCounter,
+
+                            child: Container(
+                              width: 34,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xffcacaca), width: 1, ),
+                                color: Color(0xffeaeaea),
+                              ),
+                              child: Icon(Icons.add),
+
+
                             ),
-                            child: Icon(Icons.add),
-
-
                           ),
                         ],
                       ),
@@ -714,6 +753,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(height: 10,),
+
               Container(
                 width: 351,
                 height: 22,
@@ -786,18 +826,92 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ],
                 ),
               ),
+              SizedBox(height: 10,),
+              Text(
+                "Delivery or Pickup Date: ",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10,),
+              Center(
+                child: Text(
+                  '${date.day}/${date.month}/${date.year}',
+                  style: TextStyle(
+                    color: Color(0xff2d2d2d),
+                    fontSize: 16,
+                    fontFamily: "Lato",
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              ElevatedButton(onPressed: () async{
+                DateTime? newDate = await showDatePicker(context: context, initialDate: date, firstDate: DateTime(2000) , lastDate: DateTime(2100));
+                if(newDate == null) return;
+                //
+                setState(() {
+                  date = newDate;
+                });
+              }, child: Center(child: Text('Select Date'))),
+              Text(
+                "Return or End Date: ",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10,),
+              Center(
+                child: Text(
+                  '${returnDate.day}/${returnDate.month}/${returnDate.year}',
+                  style: TextStyle(
+                    color: Color(0xff2d2d2d),
+                    fontSize: 16,
+                    fontFamily: "Lato",
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              ElevatedButton(onPressed: ()async{
+                DateTime? newReturnDate = await showDatePicker(context: context, initialDate: returnDate, firstDate: DateTime(2000) , lastDate: DateTime(2100));
+                if(newReturnDate == null) return;
+
+                setState(() {
+                  returnDate = newReturnDate;
+                });
+              }, child: Center(child: Text('Select Date'))),
+
+              SizedBox(height: 10,),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal:
+                10),
+                child: addressForm(context),
+              ),
+
+
               SizedBox(height: 20,),
               GestureDetector(
                 onTap: ()async{
-                  bool? status = await productAddToCart(ProductCart(
+
+                  bool? status = await productAddToCart(AddCart(
                     productId:widget.model.id.toString() ,
-                    quantity:"1" ,
+                    quantity: counter.toString() ,
                     rent: rentType(),
                     rentPrice:rentPrice() ,
                     package: packageType(),
                     packagePrice: packagePrice(),
                     delivery: deliveryMethod(),
-
+                    startDate: date.toString(),
+                    endDate: returnDate.toString(),
+                    totalAmount: totalPrice().toString(),
 
                   ));
                   if(status!){
@@ -910,6 +1024,185 @@ class _ProductDetailsState extends State<ProductDetails> {
     }else{
       return widget.model.package1Price!;
     }
+  }
+
+  dynamic totalPrice(){
+     return (counter* double.parse(widget.model.oneDayPrice!));
+  }
+
+
+
+
+
+
+  Widget addressForm(BuildContext context){
+    return Column(
+      children: [
+        Container(
+          width: 365,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+            color: Colors.white,
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: _address,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Address',
+                hintStyle: TextStyle(
+                  color: Color(0xffb9b9b9),
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          width: 365,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+            color: Colors.white,
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: _landmark,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Land Mark',
+                hintStyle: TextStyle(
+                  color: Color(0xffb9b9b9),
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          width: 365,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+            color: Colors.white,
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: _country,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Country',
+                hintStyle: TextStyle(
+                  color: Color(0xffb9b9b9),
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          width: 365,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+            color: Colors.white,
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: _state,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'State',
+                hintStyle: TextStyle(
+                  color: Color(0xffb9b9b9),
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          width: 365,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+            color: Colors.white,
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: _city,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'City',
+                hintStyle: TextStyle(
+                  color: Color(0xffb9b9b9),
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          width: 365,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+            color: Colors.white,
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: _postal,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Postal Code',
+                hintStyle: TextStyle(
+                  color: Color(0xffb9b9b9),
+                  fontSize: 16,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        /// here you have to add all form fieds
+      ],
+    );
   }
 
 

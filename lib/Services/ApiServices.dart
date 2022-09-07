@@ -18,6 +18,7 @@ import 'package:purpleavapp/Modal/review_modal.dart';
 import 'package:purpleavapp/Modal/user_profile_modal.dart';
 import 'package:purpleavapp/Services/storage_services.dart';
 
+import '../Modal/renter_model/book_product_from_cart.dart';
 import '../Modal/renter_model/category_search_modal.dart';
 import '../Modal/renter_model/get_product_in_cart_modal.dart';
 
@@ -345,7 +346,7 @@ Future<GetProductAddedToCartModal?> productToCart() async {
   }
 }
 
-Future<dynamic> productAddToCart(ProductCart model) async {
+Future<dynamic> productAddToCart( model) async {
   debugPrint(model.toJson().toString());
   String? tokenValue = await _services.getToken();
   debugPrint(tokenValue);
@@ -388,3 +389,31 @@ Future deleteFromCart(int id) async {
   getAllProducts();
   print('get products  hit');
 }
+
+Future<dynamic> postAllBookings( model) async {
+  debugPrint(model.toJson().toString());
+
+  String? tokenValue = await _services.getToken();
+  debugPrint(tokenValue);
+
+  String url = "https://purpleapp.omkatech.com/api/bookings";
+  debugPrint("add api pressed");
+  final response =
+  await http.post(Uri.parse(url), body: model.toJson(), headers: {
+    'Authorization': 'Bearer $tokenValue',
+  });
+  if (response.statusCode == 200 || response.statusCode == 400) {
+    var jsonResponse = json.decode(response.body);
+    debugPrint(jsonResponse["message"]);
+    debugPrint(response.body);
+    debugPrint("guri");
+    if (jsonResponse["message"] == "Booking Added Succesfully") {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:purpleavapp/Modal/renter_model/category_search_modal.dart';
 
 import 'package:purpleavapp/Modal/renter_model/search_modal.dart';
 import 'package:purpleavapp/Screens/RenterScreens/product_details.dart';
@@ -162,7 +163,9 @@ class _ViewProductsState extends State<ViewProducts> {
                                             SizedBox(height: 30,),
                                             GestureDetector(
                                               onTap: (){
-                                                // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: DataCategory(
+                                                  id: snapshot.data!.data[index].id,
+                                                ) )));
                                               },
                                               child: Container(
                                                 width: 186,
