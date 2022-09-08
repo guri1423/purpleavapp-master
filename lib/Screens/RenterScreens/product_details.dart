@@ -164,7 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       left: 38,
                       top: 22,
                       child: Text(
-                        "Renter Review",
+                        "Review",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 22,
@@ -213,8 +213,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               SizedBox(height: 10,),
               Text(
-                "Brand: \$${widget.model.brand}\n"
-                    "Model: \$${widget.model.model}",
+                "Brand: ${widget.model.brand}\n"
+                    "Model:${widget.model.model}",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,

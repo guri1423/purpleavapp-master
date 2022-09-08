@@ -417,3 +417,31 @@ Future<dynamic> postAllBookings( model) async {
   }
 }
 
+Future<dynamic> deleteWholeCart() async {
+
+  String? tokenValue = await _services.getToken();
+  debugPrint(tokenValue);
+
+  String url = "https://purpleapp.omkatech.com/api/cart/delete";
+  debugPrint("delete api pressed");
+  final response =
+  await http.post(Uri.parse(url),  headers: {
+    'Authorization': 'Bearer $tokenValue',
+  });
+  if (response.statusCode == 200 || response.statusCode == 400) {
+    var jsonResponse = json.decode(response.body);
+    debugPrint(jsonResponse["message"]);
+    debugPrint(response.body);
+    debugPrint("guri");
+    if (jsonResponse["message"] == "Product Deleted Successfully") {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
+
+
+

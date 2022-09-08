@@ -80,7 +80,10 @@ class _RenterHomeScreenState extends State<RenterHomeScreen> {
                   children: [
                     Center(
                       child: CarouselSlider.builder(itemCount: snapshot.data!.banner.length, itemBuilder: (context, index, realIndex){
-                        return Image.network("https://purpleapp.omkatech.com/${snapshot.data!.banner[index].banner}");
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.banner[index].banner}"),
+                        );
                       }, options: CarouselOptions(height: 200,
                       autoPlay: true)),
                     ),

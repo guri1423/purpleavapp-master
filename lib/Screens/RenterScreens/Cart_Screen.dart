@@ -76,7 +76,7 @@ class _RenterCartState extends State<RenterCart> {
                             itemCount: snapshot.data!.cart!.length,
                             itemBuilder: (context, index)
                             {
-                              productId.add(snapshot.data!.cart![index].id.toString());
+                              productId.add(snapshot.data!.cart![index].productId.toString());
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -343,10 +343,12 @@ class _RenterCartState extends State<RenterCart> {
                           GestureDetector(
                             onTap: (){
                               debugPrint("add booking pressed");
-                             debugPrint(productId.toString());
+                             debugPrint(chunk(productId, 1).toString());
 
-                             postAllBookings(BookCart(
-                               id: productId.toString(),
+                             // deleteWholeCart();
+
+                              postAllBookings(BookCart(
+                               id: chunk(productId, 1).toString()
                              ));
                             },
                             child: Container(

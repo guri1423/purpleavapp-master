@@ -1380,6 +1380,7 @@ class _AddProductsState extends State<AddProducts> {
 
             setState(() {
               form = false;
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProducts()));
             });
           },
           child: Container(

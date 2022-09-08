@@ -262,10 +262,10 @@ class _SignInState extends State<SignIn> {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () async {
-                if(selectedItem =="service"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
-                ), (route) => false);}
-                else if (selectedItem =="renter"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
-                ), (route) => false);}
+                // if(selectedItem =="service"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
+                // ), (route) => false);}
+                // else if (selectedItem =="renter"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
+                // ), (route) => false);}
 
 
 
