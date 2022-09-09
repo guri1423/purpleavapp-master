@@ -394,8 +394,10 @@ Future deleteFromCart(int id) async {
   print('get products  hit');
 }
 
-Future<dynamic> postAllBookings( model) async {
-  debugPrint(model.toJson().toString());
+Future<dynamic> postAllBookings(List model) async {
+  debugPrint(model.length.toString());
+  // debugPrint(model.toJson().toString());
+
 
   String? tokenValue = await _services.getToken();
   debugPrint(tokenValue);
@@ -404,39 +406,47 @@ Future<dynamic> postAllBookings( model) async {
   debugPrint("add api pressed");
   final Map<String, dynamic> body = Map<String, dynamic>();
 
-  if (model != null) {
-    for (int i = 0; i < model.length; i++) {
-      body['product_id[$i]'] = json.encode(model[i]);
-    }}
-    final response =
-    await http.post(Uri.parse(url), body:{}, headers: {
-      'Authorization': 'Bearer $tokenValue',
-    });
-    if (response.statusCode == 200 || response.statusCode == 400) {
-      var jsonResponse = json.decode(response.body);
-      debugPrint(jsonResponse["message"]);
-      debugPrint(response.body);
-      debugPrint("guri");
-      if (jsonResponse["message"] == "Booking Added Succesfully") {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      throw Exception('Failed to load data');
-    }
 
+  for (int i = 0; i < model.length; i++) {
+    body['product_id[$i]'] = json.encode(int.parse(model[i]));
+
+  }
+
+
+debugPrint(body.toString());
+
+  final response =
+  await http.post(Uri.parse(url), body: body, headers: {
+    'Authorization': 'Bearer $tokenValue',
+  });
+  debugPrint(response.body);
+  if (response.statusCode == 200 || response.statusCode == 400) {
+    var jsonResponse = json.decode(response.body);
+    debugPrint(jsonResponse["message"]);
+    debugPrint(response.body);
+    debugPrint("guri");
+    if (jsonResponse["message"] == "Booking Completed Succesfully") {
+      deleteWholeCart();
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    throw Exception('Failed to load data');
+  }
+
+}
 
   Future<dynamic> deleteWholeCart() async {
     String? tokenValue = await _services.getToken();
     debugPrint(tokenValue);
-
     String url = "https://purpleapp.omkatech.com/api/cart/delete";
     debugPrint("delete api pressed");
     final response =
-    await http.post(Uri.parse(url), headers: {
+    await http.get(Uri.parse(url), headers: {
       'Authorization': 'Bearer $tokenValue',
     });
+    debugPrint(response.body);
     if (response.statusCode == 200 || response.statusCode == 400) {
       var jsonResponse = json.decode(response.body);
       debugPrint(jsonResponse["message"]);
@@ -451,4 +461,4 @@ Future<dynamic> postAllBookings( model) async {
       throw Exception('Failed to load data');
     }
   }
-}
+// }
