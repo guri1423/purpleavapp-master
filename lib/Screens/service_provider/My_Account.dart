@@ -164,21 +164,26 @@ class _MyAccountState extends State<MyAccount> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children:[
-                                            Container(
-                                              width: 120,
-                                              height: 38,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(4),
-                                                color: Color(0xffb3b3b3),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  "Cancel",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontFamily: "Lato",
-                                                    fontWeight: FontWeight.w500,
+                                            GestureDetector(
+                                              onTap:(){
+                                                Navigator.pop(context);
+                                              },
+                                              child: Container(
+                                                width: 120,
+                                                height: 38,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(4),
+                                                  color: Color(0xffb3b3b3),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontFamily: "Lato",
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
                                                   ),
                                                 ),
                                               ),

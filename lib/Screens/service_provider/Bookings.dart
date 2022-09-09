@@ -154,7 +154,7 @@ class _BookingsState extends State<Bookings> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            snapshot.data!.bookings![index].productId!,
+                                            snapshot.data!.bookings![index].totalPrice!,
                                             style: TextStyle(
                                               color: Color(0xff727171),
                                               fontSize: 15,

@@ -16,8 +16,8 @@ import 'package:purpleavapp/Services/storage_services.dart';
 
 
 class SignUp extends StatefulWidget {
-  int role;
-   SignUp({Key? key, required this.role}) : super(key: key);
+
+   SignUp({Key? key,}) : super(key: key);
 
 
   @override
@@ -46,6 +46,9 @@ class _SignUpState extends State<SignUp> {
       debugPrint(_phoneNoController.text);
 
     }
+
+    List<String> items =['service', 'renter'];
+    String? selectedItem = 'service';
 
   File? _image;
     final StorageServices _services = StorageServices();
@@ -360,6 +363,39 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 59,
+                    width: MediaQuery.of(context).size.width*0.95,
+                    child: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(width: 1, color: Colors.grey)
+                          ),
+                          disabledBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(width: 1, color: Colors.grey)
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(width: 1, color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(width: 1, color: Colors.grey)
+                          ),
+
+                        ),
+                        value: selectedItem,
+                        items: items
+                            .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item, style: TextStyle(fontSize: 20),))).toList(),
+                        onChanged: (items) => setState(() {
+                          selectedItem = items;
+                        }) ),
+                  ),
                   SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -433,14 +469,9 @@ class _SignUpState extends State<SignUp> {
                           color: Color(0xff5600d4),),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
-                          if (widget.role==0){Navigator.pushReplacement(
-                              context, MaterialPageRoute(
-                              builder: (context) => SignIn()));}
-                          else if (widget.role==1){
-                            Navigator.pushReplacement(
-                                context, MaterialPageRoute(
-                                builder: (context) => SignIn()));
-                          }
+                                Navigator.pushReplacement(
+                                    context, MaterialPageRoute(
+                                    builder: (context) => SignIn()));
                               }),
                       ],
                     ),
@@ -467,7 +498,7 @@ class _SignUpState extends State<SignUp> {
       request.fields["name"] = _userController.text;
       request.fields["phone"] = _phoneNoController.text;
       request.fields["password"] = _password.text;
-      request.fields["role"] = getRole(widget.role);
+      request.fields["role"] = selectedItem!;
       var multipartFile= http.MultipartFile('profile_pic', stream, length,filename: _image.path);
       request.files.add(multipartFile);
       await request.send().then((response) async{
@@ -486,7 +517,7 @@ class _SignUpState extends State<SignUp> {
           if (fromJson(json.decode(value))== "User Registered Successfully |")
           {
 
-            if (widget.role==0){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
+            if (selectedItem == 'service' ){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
             ), (route) => false);}
             else { Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
             ), (route) => false);}

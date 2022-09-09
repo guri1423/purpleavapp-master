@@ -84,7 +84,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                 color: Colors.white,
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                                 child: Column(
                                   children:[
                                     Row(
@@ -92,7 +92,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                         Column(
                                           children: [
                                             Container(
-                                              width: 144,
+                                              width: 135,
                                               height: 136,
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(7),

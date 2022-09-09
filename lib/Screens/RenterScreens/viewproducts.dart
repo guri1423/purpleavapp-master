@@ -152,7 +152,7 @@ class _ViewProductsState extends State<ViewProducts> {
                                             ),
                                             SizedBox(height: 20,),
                                             Text(
-                                              "Rent -\$${snapshot.data!.data[index].weeklyPrice}",
+                                              "Rent -\$${snapshot.data!.data[index].oneDayPrice}",
                                               style: TextStyle(
                                                 color: Color(0xff0a0a0a),
                                                 fontSize: 18,
@@ -165,6 +165,28 @@ class _ViewProductsState extends State<ViewProducts> {
                                               onTap: (){
                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: DataCategory(
                                                   id: snapshot.data!.data[index].id,
+                                                  serviceProviderId:snapshot.data!.data[index].serviceProviderId,
+                                                  model:snapshot.data!.data[index].model,
+                                                  brand:snapshot.data!.data[index].brand,
+                                                  manualPdf:snapshot.data!.data[index].manualPdf,
+                                                  weekendPrice:snapshot.data!.data[index].weekendPrice,
+                                                  oneDayPrice:snapshot.data!.data[index].oneDayPrice,
+                                                  twoDayPrice:snapshot.data!.data[index].twoDayPrice,
+                                                  threeDayPrice:snapshot.data!.data[index].threeDayPrice,
+                                                  weeklyPrice:snapshot.data!.data[index].weeklyPrice,
+                                                  package1:snapshot.data!.data[index].package1,
+                                                  package2:snapshot.data!.data[index].package2,
+                                                  package1Price:snapshot.data!.data[index].package1Price,
+                                                  package2Price:snapshot.data!.data[index].package2Price,
+                                                  inventory:snapshot.data!.data[index].inventory,
+                                                  delivery:snapshot.data!.data[index].delivery,
+                                                  shippingCost:snapshot.data!.data[index].shippingCost,
+                                                  moreInfo:snapshot.data!.data[index].moreInfo,
+                                                  termsConditions:snapshot.data!.data[index].termsConditions,
+                                                  categoryId:snapshot.data!.data[index].categoryId,
+                                                  name: snapshot.data!.data[index].name,
+
+
                                                 ) )));
                                               },
                                               child: Container(
@@ -179,7 +201,7 @@ class _ViewProductsState extends State<ViewProducts> {
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: const[
                                                     Text(
-                                                      "Add to Cart",
+                                                      "View Details",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 14,

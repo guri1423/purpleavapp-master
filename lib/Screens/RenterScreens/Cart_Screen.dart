@@ -30,8 +30,8 @@ class _RenterCartState extends State<RenterCart> {
 
 
   List<String> productId= [
+    ];
 
-  ];
 
 
   @override
@@ -111,7 +111,7 @@ class _RenterCartState extends State<RenterCart> {
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 Text(
-                                    snapshot.data!.cart![index].product!.name??"NA",
+                                             snapshot.data!.cart![index].product!.name??"NA",
                                                   style: TextStyle(
                                                     color: Color(0xff727171),
                                                     fontSize: 15,
@@ -243,7 +243,7 @@ class _RenterCartState extends State<RenterCart> {
                                 Row(
                                   children: [
                                     Text(
-                                      " Proceed to Payment (2 Items)",
+                                      " Proceed to Payment (${snapshot.data!.cart!.length.toInt()} Items)",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -268,7 +268,9 @@ class _RenterCartState extends State<RenterCart> {
                                       ),
                                     ),
                                     Spacer(),
-                                    Text(
+
+
+                                      Text(
                                       "\$110.00",
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
@@ -403,6 +405,12 @@ class _RenterCartState extends State<RenterCart> {
 
       ),
 
+
+
+
       );
+
+
   }
+
 }

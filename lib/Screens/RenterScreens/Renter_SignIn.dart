@@ -287,7 +287,7 @@ class _RenterSignInState extends State<RenterSignIn> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
                             Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => SignUp(role: 1,)));
+                                builder: (context) => SignUp()));
 
                           }),
                   ],

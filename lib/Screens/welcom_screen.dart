@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:purpleavapp/Screens/RenterScreens/Renter_SignUp.dart';
+import 'package:purpleavapp/Screens/service_provider/SignIn.dart';
 import 'package:purpleavapp/Screens/service_provider/SignUp.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -70,10 +71,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               child: Center(
                 child: GestureDetector(onTap: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUp(role: 0,)));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUp()));
                 },
                   child: Text(
-                    "Register as Service Provider",
+                    "Sign Up",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -86,7 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
           ),
           GestureDetector( onTap: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUp(role: 1,)));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIn()));
           },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -99,7 +100,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    "Register as End User",
+                    "Login",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

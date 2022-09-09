@@ -406,7 +406,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Spacer(),
                     Text(
-                        "\$${widget.model.twoDayPrice}",
+                        "\$${widget.model.threeDayPrice}",
                       style: TextStyle(
                         color: Color(0xff5600d4),
                         fontSize: 18,
@@ -496,7 +496,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Spacer(),
                     Text(
-                      "per day price",
+                      "\$${widget.model.oneDayPrice}",
                       style: TextStyle(
                         color: Color(0xff5600d4),
                         fontSize: 18,
@@ -686,7 +686,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Spacer(),
                     Text(
-                    "\$${widget.model.package1}",
+                    "\$${widget.model.package1Price}",
                       style: TextStyle(
                         color: Color(0xff5600d4),
                         fontSize: 18,
@@ -731,7 +731,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Spacer(),
                     Text(
-                      "\$${widget.model.package1}",
+                      "\$${widget.model.package2Price}",
                       style: TextStyle(
                         color: Color(0xff5600d4),
                         fontSize: 18,

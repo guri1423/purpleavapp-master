@@ -74,7 +74,6 @@ class DataCategory {
     this.moreInfo,
     this.termsConditions,
     this.categoryId,
-    this.deletedAt,
     this.productImages,
     this.pickupAddress,
   });
@@ -126,7 +125,6 @@ class DataCategory {
     moreInfo: json["more_info"],
     termsConditions: json["terms_conditions"],
     categoryId: json["category_id"],
-    deletedAt: json["deleted_at"],
     productImages: List<ProductImage>.from(json["product_images"].map((x) => ProductImage.fromJson(x))),
     pickupAddress: PickupAddress.fromJson(json["pickup_address"]),
   );
