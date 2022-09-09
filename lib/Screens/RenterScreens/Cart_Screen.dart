@@ -30,8 +30,11 @@ class _RenterCartState extends State<RenterCart> {
 
 
   List<String> productId= [
-    ];
 
+  ];
+
+
+  double subTotal =0;
 
 
   @override
@@ -56,178 +59,175 @@ class _RenterCartState extends State<RenterCart> {
             ],
           )
       ),
-      body: FutureBuilder<GetProductAddedToCartModal?>(
-          future: productToCart(),
-          builder: (context,snapshot){
+      body: SingleChildScrollView(
+        child: FutureBuilder<GetProductAddedToCartModal?>(
+            future: productToCart(),
+            builder: (context,snapshot){
+              if (snapshot.hasData){
+                for(int i=0;i<snapshot.data!.cart!.length; i++){
+                  productId.add(snapshot.data!.cart![i].productId.toString());
+                  double amount = double.parse(snapshot.data!.cart![i].rentPrice!)*double.parse(snapshot.data!.cart![i].quantity!);
+                  subTotal = subTotal+amount;
+                }
 
-            if (snapshot.hasData){
-
-              return SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                return Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 350,
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView.builder
-                          (shrinkWrap: true,
-                            itemCount: snapshot.data!.cart!.length,
-                            itemBuilder: (context, index)
-                            {
-                              productId.add(snapshot.data!.cart![index].productId.toString());
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color: Color(0xfff4f4f4),),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children:[
-                                            Container(
-                                              width: 90,
-                                              height: 85,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(7),
-                                                color: Color(0xfff4f4f4),
-                                              ),
-                                              child: Container(
-                                                  width: 67.50,
-                                                  height: 67.50,
-                                                  child: Image.asset('images/cartimage.png')
-                                              ),
+                      child: ListView.builder
+                        (shrinkWrap: true,
+                          itemCount: snapshot.data!.cart!.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index)
+                          {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Color(0xfff4f4f4),),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children:[
+                                          Container(
+                                            width: 90,
+                                            height: 85,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(7),
+                                              color: Color(0xfff4f4f4),
                                             ),
+                                            child: Container(
+                                                width: 67.50,
+                                                height: 67.50,
+                                                child: Image.asset('images/cartimage.png')
+                                            ),
+                                          ),
 
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                             snapshot.data!.cart![index].product!.name??"NA",
-                                                  style: TextStyle(
-                                                    color: Color(0xff727171),
-                                                    fontSize: 15,
-                                                  ),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                  snapshot.data!.cart![index].product!.name??"NA",
+                                                style: TextStyle(
+                                                  color: Color(0xff727171),
+                                                  fontSize: 15,
                                                 ),
+                                              ),
 
+                                              Text(
+                                                "Rent - \$${snapshot.data!.cart![index].rentPrice??"NA"}",
+                                                style: TextStyle(
+                                                  color: Color(0xff0a0a0a),
+                                                  fontSize: 18,
+                                                  fontFamily: "Lato",
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            width: 124,
+                                            height: 26,
+                                            child: Row(
+
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+
+                                              children:[
                                                 Text(
-                                                  "Rent - \$${snapshot.data!.cart![index].rentPrice??"NA"}",
+                                            snapshot.data!.cart![index].rent!,
                                                   style: TextStyle(
-                                                    color: Color(0xff0a0a0a),
-                                                    fontSize: 18,
+                                                    color: Color(0xff5600d4),
+                                                    fontSize: 14,
                                                     fontFamily: "Lato",
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Row(
 
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              width: 124,
-                                              height: 26,
-                                              child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children:[
+                                              SizedBox(width: 5,),
 
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
 
-                                                children:[
-                                                  Text(
-                                              snapshot.data!.cart![index].rent!,
-                                                    style: TextStyle(
-                                                      color: Color(0xff5600d4),
-                                                      fontSize: 14,
-                                                      fontFamily: "Lato",
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ],
+                                              Text(
+                                                'Quantity- ${snapshot.data!.cart![index].quantity}',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xff2d2d2d),
+                                                  fontSize: 18,
+                                                  fontFamily: "Roboto",
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
-                                            ),
-                                            Row(
+                                              SizedBox(width: 5,),
 
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children:[
-                                                SizedBox(width: 5,),
+                                              // Container(
+                                              //   width: 34,
+                                              //   height: 28,
+                                              //   decoration: BoxDecoration(
+                                              //     border: Border.all(color: Color(0xffcacaca), width: 1, ),
+                                              //     color: Color(0xffeaeaea),
+                                              //   ),
+                                              //   child: Icon(Icons.add),
+                                              //
+                                              //
+                                              // ),
+                                            ],
+                                          ),
 
+                                          GestureDetector(
+                                            onTap: (){
+                                              id= snapshot.data!.cart![index].id!;
+                                              deleteFromCart(id);
+                                            },
 
-                                                Text(
-                                                  'Quantity- ${snapshot.data!.cart![index].quantity}',
-                                                  textAlign: TextAlign.center,
+                                            child: Container(
+                                              width: 62,
+                                              height: 26,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(2),
+                                                border: Border.all(color: Color(0xffcacaca), width: 1.20, ),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "Delete",
                                                   style: TextStyle(
-                                                    color: Color(0xff2d2d2d),
-                                                    fontSize: 18,
-                                                    fontFamily: "Roboto",
+                                                    color: Color(0xff6f6f6f),
+                                                    fontSize: 14,
+                                                    fontFamily: "Lato",
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
-                                                SizedBox(width: 5,),
-
-                                                // Container(
-                                                //   width: 34,
-                                                //   height: 28,
-                                                //   decoration: BoxDecoration(
-                                                //     border: Border.all(color: Color(0xffcacaca), width: 1, ),
-                                                //     color: Color(0xffeaeaea),
-                                                //   ),
-                                                //   child: Icon(Icons.add),
-                                                //
-                                                //
-                                                // ),
-                                              ],
-                                            ),
-
-                                            GestureDetector(
-                                              onTap: (){
-                                                id= snapshot.data!.cart![index].id!;
-                                                deleteFromCart(id);
-                                              },
-
-                                              child: Container(
-                                                width: 62,
-                                                height: 26,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(2),
-                                                  border: Border.all(color: Color(0xffcacaca), width: 1.20, ),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                      color: Color(0xff6f6f6f),
-                                                      fontSize: 14,
-                                                      fontFamily: "Lato",
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
 
-                                    ),
                                   ),
                                 ),
-                              );
-                            }),
-                      ),
+                              ),
+                            );
+                          }),
                     ),
-                    Spacer(),
+                   SizedBox(height: 20,),
                     SizedBox(
                       height: MediaQuery.of(context).size.height*0.3,
                       width: MediaQuery.of(context).size.width,
@@ -243,7 +243,7 @@ class _RenterCartState extends State<RenterCart> {
                                 Row(
                                   children: [
                                     Text(
-                                      " Proceed to Payment (${snapshot.data!.cart!.length.toInt()} Items)",
+                                      " Proceed to Payment (${snapshot.data!.cart!.length} Items)",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -268,10 +268,8 @@ class _RenterCartState extends State<RenterCart> {
                                       ),
                                     ),
                                     Spacer(),
-
-
-                                      Text(
-                                      "\$110.00",
+                                    Text(
+                                      "\$${subTotal}",
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                         color: Color(0xff2d2d2d),
@@ -326,7 +324,7 @@ class _RenterCartState extends State<RenterCart> {
                                     ),
                                     Spacer(),
                                     Text(
-                                      "\$115.00",
+                                      "\$${getTotalAmount(subTotal, 15)}",
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                         color: Color(0xff2d2d2d),
@@ -346,14 +344,10 @@ class _RenterCartState extends State<RenterCart> {
                           SizedBox(height: 11.60),
                           GestureDetector(
                             onTap: (){
-                              debugPrint("add booking pressed");
-                             debugPrint(chunk(productId, 1).toString());
-
-                             // deleteWholeCart();
-
-                              postAllBookings(BookCart(
-                               id: productId.toString(),
-                             ));
+                              postAllBookings(productId,);
+                            setState(() {
+                              productId = [];
+                            });
                             },
                             child: Container(
                               width: 363,
@@ -369,7 +363,7 @@ class _RenterCartState extends State<RenterCart> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children:[
+                                  children:const [
                                     Text(
                                       "Proceed to Payment",
                                       style: TextStyle(
@@ -385,32 +379,30 @@ class _RenterCartState extends State<RenterCart> {
                             ),
                           ),
                           SizedBox(height: 11.60),
-
                         ],
                       ),
                     ),
 
                   ],
-                ),
-              );
+                );
+              }
+              if (snapshot.hasError){
+                return Center(child: Text('Something went wrong'));
+              }
+              return Center(child: CircularProgressIndicator());
+
+
             }
-            if (snapshot.hasError){
-              return Center(child: Text('Something went wrong'));
-            }
-            return Center(child: CircularProgressIndicator());
 
 
-          }
-
-
+        ),
       ),
 
-
-
-
       );
-
-
   }
 
+
+  double getTotalAmount(double subTotal, double shippingCharge){
+    return subTotal+shippingCharge;
+  }
 }
