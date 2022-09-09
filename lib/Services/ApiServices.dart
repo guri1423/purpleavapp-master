@@ -88,8 +88,12 @@ Future<bool?> contactDetails(Contact model) async {
 
 Future<GetProductsModal> getAllProducts() async {
   String url = "https://purpleapp.omkatech.com/api/products";
+  String? tokenValue = await _services.getToken();
+  debugPrint(tokenValue);
   final response = await http.get(
-    Uri.parse(url),
+    Uri.parse(url),  headers: {
+    'Authorization': 'Bearer $tokenValue',
+  }
   );
   if (response.statusCode == 200 || response.statusCode == 400) {
     print(response.body);
@@ -398,50 +402,53 @@ Future<dynamic> postAllBookings( model) async {
 
   String url = "https://purpleapp.omkatech.com/api/bookings";
   debugPrint("add api pressed");
-  final response =
-  await http.post(Uri.parse(url), body: model.toJson(), headers: {
-    'Authorization': 'Bearer $tokenValue',
-  });
-  if (response.statusCode == 200 || response.statusCode == 400) {
-    var jsonResponse = json.decode(response.body);
-    debugPrint(jsonResponse["message"]);
-    debugPrint(response.body);
-    debugPrint("guri");
-    if (jsonResponse["message"] == "Booking Added Succesfully") {
-      return true;
+  final Map<String, dynamic> body = Map<String, dynamic>();
+
+  if (model != null) {
+    for (int i = 0; i < model.length; i++) {
+      body['product_id[$i]'] = json.encode(model[i]);
+    }}
+    final response =
+    await http.post(Uri.parse(url), body:{}, headers: {
+      'Authorization': 'Bearer $tokenValue',
+    });
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      var jsonResponse = json.decode(response.body);
+      debugPrint(jsonResponse["message"]);
+      debugPrint(response.body);
+      debugPrint("guri");
+      if (jsonResponse["message"] == "Booking Added Succesfully") {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      throw Exception('Failed to load data');
     }
-  } else {
-    throw Exception('Failed to load data');
+
+
+  Future<dynamic> deleteWholeCart() async {
+    String? tokenValue = await _services.getToken();
+    debugPrint(tokenValue);
+
+    String url = "https://purpleapp.omkatech.com/api/cart/delete";
+    debugPrint("delete api pressed");
+    final response =
+    await http.post(Uri.parse(url), headers: {
+      'Authorization': 'Bearer $tokenValue',
+    });
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      var jsonResponse = json.decode(response.body);
+      debugPrint(jsonResponse["message"]);
+      debugPrint(response.body);
+      debugPrint("guri");
+      if (jsonResponse["message"] == "Product Deleted Successfully") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 }
-
-Future<dynamic> deleteWholeCart() async {
-
-  String? tokenValue = await _services.getToken();
-  debugPrint(tokenValue);
-
-  String url = "https://purpleapp.omkatech.com/api/cart/delete";
-  debugPrint("delete api pressed");
-  final response =
-  await http.post(Uri.parse(url),  headers: {
-    'Authorization': 'Bearer $tokenValue',
-  });
-  if (response.statusCode == 200 || response.statusCode == 400) {
-    var jsonResponse = json.decode(response.body);
-    debugPrint(jsonResponse["message"]);
-    debugPrint(response.body);
-    debugPrint("guri");
-    if (jsonResponse["message"] == "Product Deleted Successfully") {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    throw Exception('Failed to load data');
-  }
-}
-
-
-

@@ -95,13 +95,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 45,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color:Color(0xff5600d4), width: 1, ),
+                  gradient: LinearGradient(begin: Alignment.centerRight, end: Alignment.centerLeft, colors: [Color(0xff8600e9), Color(0xff5600d4)], ),
                 ),
                 child: Center(
                   child: Text(
                     "Register as End User",
                     style: TextStyle(
-                      color: Color(0xff5600d4),
+                      color: Colors.white,
                       fontSize: 18,
                       fontFamily: "Lato",
                       fontWeight: FontWeight.w500,

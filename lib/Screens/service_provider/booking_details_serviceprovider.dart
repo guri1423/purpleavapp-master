@@ -47,12 +47,12 @@ class _ClosedBookingState extends State<ClosedBooking> {
         future:getAllBookings(),
         builder: (context,snapshot){
           if (snapshot.hasData){
-            return ListView.builder(itemCount: snapshot.data!.bookings.length,
+            return ListView.builder(itemCount: snapshot.data!.bookings!.length,
                 itemBuilder: (BuildContext context, int index){
               return Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: SingleChildScrollView(
-                  child: Column(
+                  child:  Column(
 
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +73,7 @@ class _ClosedBookingState extends State<ClosedBooking> {
                               // ),
                               SizedBox(height: 20.28),
                               Text(
-                                snapshot.data!.bookings[index].serviceProviderId!,
+                                snapshot.data!.bookings![index].totalPrice!,
                                 style: TextStyle(
                                   color: Color(0xff727171),
                                   fontSize: 15,
@@ -238,7 +238,7 @@ class _ClosedBookingState extends State<ClosedBooking> {
 
                       SizedBox(height: 20.28),
                       Text(
-                        snapshot.data!.bookings[index].quantity!,
+                        snapshot.data!.bookings![index].quantity!,
                         style: TextStyle(
                           color: Color(0xff5600d4),
                           fontSize: 18,

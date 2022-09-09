@@ -185,6 +185,7 @@ class _SignInState extends State<SignIn> {
               )),
           SizedBox(height: 20),
           SizedBox(
+            height: 59,
             width: MediaQuery.of(context).size.width*0.95,
             child: DropdownButtonFormField<String>(
                 decoration: InputDecoration(

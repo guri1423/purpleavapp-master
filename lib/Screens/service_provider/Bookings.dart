@@ -123,7 +123,7 @@ class _BookingsState extends State<Bookings> {
                     return ListView.builder(
                         shrinkWrap: true,
                         // physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data!.bookings.length,
+                        itemCount: snapshot.data!.bookings!.length,
                         itemBuilder: (context, index) {
                           return  Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -154,7 +154,7 @@ class _BookingsState extends State<Bookings> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            snapshot.data!.bookings[index].package!,
+                                            snapshot.data!.bookings![index].productId!,
                                             style: TextStyle(
                                               color: Color(0xff727171),
                                               fontSize: 15,
@@ -163,7 +163,7 @@ class _BookingsState extends State<Bookings> {
                                             ),
                                           ),
                                           Text(
-                                            snapshot.data!.bookings[index].renterId!,
+                                              snapshot.data!.bookings![index].renterId!,
                                             style: TextStyle(
                                               color: Color(0xff727171),
                                               fontSize: 15,

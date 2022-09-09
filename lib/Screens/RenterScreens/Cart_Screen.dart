@@ -27,6 +27,8 @@ class _RenterCartState extends State<RenterCart> {
     return  chunks;
   }
 
+
+
   List<String> productId= [
 
   ];
@@ -348,7 +350,7 @@ class _RenterCartState extends State<RenterCart> {
                              // deleteWholeCart();
 
                               postAllBookings(BookCart(
-                               id: chunk(productId, 1).toString()
+                               id: productId.toString(),
                              ));
                             },
                             child: Container(
