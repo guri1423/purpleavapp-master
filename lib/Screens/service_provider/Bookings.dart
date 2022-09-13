@@ -56,7 +56,9 @@ class _BookingsState extends State<Bookings> {
                           Container(
                               height: 40,
                               width: MediaQuery.of(context).size.width * .5 - 1,
-                              color: Colors.white,
+                            color: index == 0
+                            ? Color(0xff5600d4)
+                            : Colors.white,
                               child: Center(
                                   child: Text(
                                 "Booking Received",
@@ -65,8 +67,8 @@ class _BookingsState extends State<Bookings> {
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w700,
                                     color: index == 0
-                                        ? Color(0xff5600d4)
-                                        : Color(0xff727171)),
+                                        ? Colors.white
+                                        : Color(0xff5600d4)),
                               ))),
                           Container(
                               height: 5,
@@ -93,7 +95,9 @@ class _BookingsState extends State<Bookings> {
                           Container(
                               height: 40,
                               width: MediaQuery.of(context).size.width * .5 - 1,
-                              color: Colors.white,
+                          color: index == 1
+                              ? Color(0xff5600d4)
+                              : Colors.white,
                               child: Center(
                                   child: Text(
                                 "Booking Closed",
@@ -102,8 +106,8 @@ class _BookingsState extends State<Bookings> {
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w700,
                                     color: index == 1
-                                        ? Color(0xff5600d4)
-                                        : Color(0xff727171)),
+                                        ? Colors.white
+                                        : Color(0xff5600d4)),
                               ))),
                           Container(
                               height: 5,
@@ -154,7 +158,7 @@ class _BookingsState extends State<Bookings> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            snapshot.data!.bookings![index].totalPrice!,
+                                            'Total price: ${snapshot.data!.bookings![index].totalPrice!} ',
                                             style: TextStyle(
                                               color: Color(0xff727171),
                                               fontSize: 15,
@@ -163,7 +167,7 @@ class _BookingsState extends State<Bookings> {
                                             ),
                                           ),
                                           Text(
-                                              snapshot.data!.bookings![index].renterId!,
+                                              'Quantity: ${snapshot.data!.bookings![index].quantity!}',
                                             style: TextStyle(
                                               color: Color(0xff727171),
                                               fontSize: 15,
@@ -203,7 +207,7 @@ class _BookingsState extends State<Bookings> {
                                   ),
                                   Spacer(),
                                   GestureDetector( onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ClosedBooking()));
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context)=> ClosedBooking()));
                                   },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,

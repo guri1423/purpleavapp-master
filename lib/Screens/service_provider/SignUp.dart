@@ -47,8 +47,8 @@ class _SignUpState extends State<SignUp> {
 
     }
 
-    List<String> items =['service', 'renter'];
-    String? selectedItem = 'service';
+    List<String> items =['Service Provider', 'End User'];
+    String? selectedItem = 'End User';
 
   File? _image;
     final StorageServices _services = StorageServices();
@@ -352,6 +352,7 @@ class _SignUpState extends State<SignUp> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      validator: validateMobile,
 
                       controller: _phoneNoController,
                       decoration: InputDecoration(
@@ -365,7 +366,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: 10),
                   SizedBox(
-                    height: 59,
+                    height: 54,
                     width: MediaQuery.of(context).size.width*0.95,
                     child: DropdownButtonFormField<String>(
                         decoration: InputDecoration(
@@ -391,7 +392,7 @@ class _SignUpState extends State<SignUp> {
                         items: items
                             .map((item) => DropdownMenuItem<String>(
                             value: item,
-                            child: Text(item, style: TextStyle(fontSize: 20),))).toList(),
+                            child: Text(item, style: TextStyle(fontSize: 15),))).toList(),
                         onChanged: (items) => setState(() {
                           selectedItem = items;
                         }) ),
@@ -498,7 +499,7 @@ class _SignUpState extends State<SignUp> {
       request.fields["name"] = _userController.text;
       request.fields["phone"] = _phoneNoController.text;
       request.fields["password"] = _password.text;
-      request.fields["role"] = selectedItem!;
+      request.fields["role"] = getRole(selectedItem!);
       var multipartFile= http.MultipartFile('profile_pic', stream, length,filename: _image.path);
       request.files.add(multipartFile);
       await request.send().then((response) async{
@@ -517,7 +518,7 @@ class _SignUpState extends State<SignUp> {
           if (fromJson(json.decode(value))== "User Registered Successfully |")
           {
 
-            if (selectedItem == 'service' ){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
+            if (selectedItem == 'Service Provider' ){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
             ), (route) => false);}
             else { Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
             ), (route) => false);}
@@ -564,6 +565,19 @@ class _SignUpState extends State<SignUp> {
           return "renter";
       }
     }
+
+String validateMobile(value) {
+  String patttern = r'(^[0-9]*$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.length == 0) {
+    return "Mobile is Required";
+  } else if(value.length != 10){
+    return "Mobile number must 10 digits";
+  }else if (!regExp.hasMatch(value)) {
+    return "Mobile Number must be digits";
+  }
+  return 'Enter Mobile Number';
+}
 
 
 

@@ -203,7 +203,7 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                child: Image.asset('images/pic1.png'),
+                child: Image.network("https://purpleapp.omkatech.com/${widget.model.productImages![0]["url"]}"),
                 width: 370,
                 height: 199,
                 decoration: BoxDecoration(
@@ -222,7 +222,7 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
                   itemBuilder: (context,index)=> Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Container(
-                      child: Image.asset("images/pic2.png"),
+                      child: Image.network("https://purpleapp.omkatech.com/${widget.model.productImages![0]["url"]}"),
                       width: 75,
                       height: 75,
                       decoration: BoxDecoration(
@@ -1012,7 +1012,7 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
                 ),
                 Text("Three day Rental Price",
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: 15
                   ),),
                 Spacer(),
                 Container(

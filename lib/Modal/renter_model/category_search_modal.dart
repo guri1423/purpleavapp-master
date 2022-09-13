@@ -100,7 +100,7 @@ class DataCategory {
   String? termsConditions;
   String? categoryId;
   dynamic? deletedAt;
-  List<ProductImage>? productImages;
+  List<ProductImages>? productImages;
   PickupAddress? pickupAddress;
 
   factory DataCategory.fromJson(Map<String, dynamic> json) => DataCategory(
@@ -125,7 +125,7 @@ class DataCategory {
     moreInfo: json["more_info"],
     termsConditions: json["terms_conditions"],
     categoryId: json["category_id"],
-    productImages: List<ProductImage>.from(json["product_images"].map((x) => ProductImage.fromJson(x))),
+    productImages: List<ProductImages>.from(json["product_images"].map((x) => ProductImages.fromJson(x))),
     pickupAddress: PickupAddress.fromJson(json["pickup_address"]),
   );
 
@@ -213,8 +213,8 @@ class PickupAddress {
   };
 }
 
-class ProductImage {
-  ProductImage({
+class ProductImages {
+  ProductImages({
     this.id,
     this.url,
     this.productId,
@@ -227,7 +227,7 @@ class ProductImage {
 
 
 
-  factory ProductImage.fromJson(Map<String, dynamic> json) => ProductImage(
+  factory ProductImages.fromJson(Map<String, dynamic> json) => ProductImages(
     id: json["id"],
     url: json["url"],
     productId: json["product_id"],

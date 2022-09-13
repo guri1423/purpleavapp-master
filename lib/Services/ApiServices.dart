@@ -292,7 +292,7 @@ Future<GetBookingModal> getAllBookings() async {
   }
 }
 
-Future<GetSearchModal> searchProducts(search) async {
+Future<GetCategoryProductModal> searchProducts(search) async {
   print(search);
 
   String url = "https://purpleapp.omkatech.com/api/search/$search";
@@ -305,7 +305,7 @@ Future<GetSearchModal> searchProducts(search) async {
 
     print("guri");
 
-    return getSearchModalFromJson(response.body);
+    return getCategoryProductModalFromJson(response.body);
   } else {
     throw Exception("Failed to load data");
   }
@@ -394,7 +394,7 @@ Future deleteFromCart(int id) async {
   print('get products  hit');
 }
 
-Future<dynamic> postAllBookings(List model) async {
+Future<bool?> postAllBookings(List model) async {
   debugPrint(model.length.toString());
   // debugPrint(model.toJson().toString());
 

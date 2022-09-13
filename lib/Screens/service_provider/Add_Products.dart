@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:purpleavapp/Modal/post_product_model.dart';
 import 'package:purpleavapp/Screens/service_provider/My_Products.dart';
+import 'package:purpleavapp/Screens/service_provider/home.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
 import 'package:purpleavapp/Services/storage_services.dart';
 
@@ -502,7 +503,7 @@ class _AddProductsState extends State<AddProducts> {
         },
           child: Container(
             width: 365,
-            height: 203,
+            height: 103,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -516,15 +517,7 @@ class _AddProductsState extends State<AddProducts> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Text(
-                  "(345×255 or larger recommended, up to )",
-                  style: TextStyle(
-                    color: Color(0xffa3a3a3),
-                    fontSize: 14,
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.w700,
-                  ),
-                )
+
               ],
             ),
 
@@ -545,10 +538,9 @@ class _AddProductsState extends State<AddProducts> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: ListView.builder(
-                itemCount: 4,
+                itemCount: 5,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   List<File?>name = [
                     _image1,
@@ -1186,58 +1178,68 @@ class _AddProductsState extends State<AddProducts> {
         ),
 
 
-        SizedBox(height: 5,),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              if (delivery) {
-                delivery = false;
-              } else {
-                delivery = true;
-              }
-            });
-          },
-          child: Container(
-              width: 365,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Delivery & Pickup *",
-                      style: TextStyle(
-                        color: Color(0xffb9b9b9),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),),
-
-                    delivery ? Icon(Icons.keyboard_arrow_up) : Icon(
-                        Icons.keyboard_arrow_down)
-                  ],
-                ),
-              )
-            // TextField(
-            //   decoration: InputDecoration(
-            //     border: InputBorder.none,
-            //     hintText: 'Price',
-            //     hintStyle: TextStyle(
-            //       color: Color(0xffb9b9b9),
-            //       fontSize: 16,
-            //       fontFamily: "Lato",
-            //       fontWeight: FontWeight.w500,
-            //     ),
-            //   ),
-            // ),
+        SizedBox(height: 10,),
+        Text(
+          "Delivery & Pickup *",
+          style: TextStyle(
+            color: Color(0xff0a0a0a),
+            fontSize: 18,
+            fontFamily: "Lato",
+            fontWeight: FontWeight.w700,
           ),
         ),
+        SizedBox(height: 5,),
+        // GestureDetector(
+        //   onTap: () {
+        //     setState(() {
+        //       if (delivery) {
+        //         delivery = false;
+        //       } else {
+        //         delivery = true;
+        //       }
+        //     });
+        //   },
+        //   child: Container(
+        //       width: 365,
+        //       height: 50,
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       child: Padding(
+        //         padding: const EdgeInsets.symmetric(horizontal: 15),
+        //         child: Row(
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Text("Delivery & Pickup *",
+        //               style: TextStyle(
+        //                 color: Color(0xffb9b9b9),
+        //                 fontSize: 16,
+        //                 fontFamily: "Lato",
+        //                 fontWeight: FontWeight.w500,
+        //               ),),
+        //
+        //             delivery ? Icon(Icons.keyboard_arrow_up) : Icon(
+        //                 Icons.keyboard_arrow_down)
+        //           ],
+        //         ),
+        //       )
+        //     // TextField(
+        //     //   decoration: InputDecoration(
+        //     //     border: InputBorder.none,
+        //     //     hintText: 'Price',
+        //     //     hintStyle: TextStyle(
+        //     //       color: Color(0xffb9b9b9),
+        //     //       fontSize: 16,
+        //     //       fontFamily: "Lato",
+        //     //       fontWeight: FontWeight.w500,
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //   ),
+        // ),
 
         /// here I have imported my custom dropdown
         /// just change list content name
@@ -1376,12 +1378,9 @@ class _AddProductsState extends State<AddProducts> {
         SizedBox(height: 40),
         GestureDetector(
           onTap: () {
-            uploadImage(_image1!);
+            uploadImage(_image1!,_image2, _image3);
 
-            setState(() {
-              form = false;
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProducts()));
-            });
+
           },
           child: Container(
               height: 50,
@@ -1430,10 +1429,12 @@ class _AddProductsState extends State<AddProducts> {
     }
   }
 
-  void uploadImage(File _image1)async{
+  Future<bool?> uploadImage(File _image1,_image2,_image3)async{
     String? tokenValue = await _services.getToken();
     debugPrint(tokenValue);
     debugPrint(_image1.path);
+    debugPrint(_image2!.path);
+    debugPrint(_image3!.path);
     debugPrint(_file.toString());
     debugPrint(_equipment.text);
     debugPrint(_model.text);
@@ -1484,7 +1485,7 @@ class _AddProductsState extends State<AddProducts> {
 
     var multipartFile= http.MultipartFile('images[]', stream, length,filename: _image1.path);
     request.files.add(multipartFile);
-    await request.send().then((response) async{
+    bool? result = await request.send().then((response) async{
 
       response.stream.transform(utf8.decoder).listen((value) async {
 
@@ -1497,6 +1498,10 @@ class _AddProductsState extends State<AddProducts> {
           Fluttertoast.showToast(msg: msg);
         }else{
           debugPrint("added");
+          setState(() {
+            form = false;
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+          });
         }
 
 

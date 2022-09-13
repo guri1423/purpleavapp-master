@@ -67,6 +67,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data!.category!.data!.length,
                         itemBuilder: (context,index){
+                          debugPrint(snapshot.data!.category!.data!.length.toString());
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -104,7 +105,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                                 onTap: (){
                                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
                                                 },
-                                                child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.category!.data![index].productImages![index].url}"),
+                                                child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.category!.data![index].productImages![0].url}"),
                                               ),
                                             ),
 

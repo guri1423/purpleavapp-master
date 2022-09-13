@@ -21,10 +21,7 @@ class MyProducts extends StatefulWidget {
 }
 
 class _MyProductsState extends State<MyProducts> {
-  void initState() {
-     getAllProducts();
-    super.initState();
-  }
+
 
   int? productId;
   @override
@@ -142,7 +139,7 @@ class _MyProductsState extends State<MyProducts> {
                                     ),
                                     SizedBox(height: 10,),
                                     Text(
-                                      'Rent -\$ ${snapshot.data!.products[index].weeklyPrice}',
+                                      'Rent -\$ ${snapshot.data!.products[index].oneDayPrice} per day',
                                       style: TextStyle(
                                         color: Color(0xff0a0a0a),
                                         fontSize: 18,

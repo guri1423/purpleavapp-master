@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:purpleavapp/Modal/renter_model/book_product_from_cart.dart';
 import 'package:purpleavapp/Modal/renter_model/get_product_in_cart_modal.dart';
+import 'package:purpleavapp/Screens/RenterScreens/Home_Screen.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
 
 class RenterCart extends StatefulWidget {
@@ -35,6 +37,8 @@ class _RenterCartState extends State<RenterCart> {
 
 
   double subTotal =0;
+
+
 
 
   @override
@@ -343,8 +347,15 @@ class _RenterCartState extends State<RenterCart> {
 
                           SizedBox(height: 11.60),
                           GestureDetector(
-                            onTap: (){
-                              postAllBookings(productId,);
+                            onTap: ()async{
+                            bool? status = await postAllBookings(productId);
+
+                            if (status!){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> RenterHome()));
+                              Fluttertoast.showToast(msg: 'Booking Completed Successfully');
+                            }
+
+
                             setState(() {
                               productId = [];
                             });
@@ -365,7 +376,7 @@ class _RenterCartState extends State<RenterCart> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children:const [
                                     Text(
-                                      "Proceed to Payment",
+                                      "Proceed to Booking",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,

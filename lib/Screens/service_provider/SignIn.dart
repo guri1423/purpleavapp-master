@@ -28,8 +28,8 @@ class _SignInState extends State<SignIn> {
   bool _ischecked = false;
   bool changeButton=false;
 
-  List<String> items =['service', 'renter'];
-  String? selectedItem = 'service';
+  List<String> items =['Service Provider', 'End User'];
+  String? selectedItem = 'End User';
 
   final StorageServices _services = StorageServices();
 
@@ -64,6 +64,17 @@ class _SignInState extends State<SignIn> {
   //   }
   // }
 
+  String changeRole(index){
+    switch(index){
+      case 'Service Provider':
+        return "service";
+      case 'End User':
+        return "renter";
+      default:
+        return "renter";
+    }
+  }
+
   void login() {
     if (_ischecked) {
       box1.put('email', _email.text);
@@ -78,9 +89,9 @@ class _SignInState extends State<SignIn> {
     });
     if (status!) {
       print("user registered");
-      if(selectedItem =="service"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
+      if(selectedItem =="Service Provider"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
       ), (route) => false);}
-      else if (selectedItem =="renter"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
+      else if (selectedItem =="End User"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
       ), (route) => false);}
     } else {
       print("try again later");
@@ -185,7 +196,7 @@ class _SignInState extends State<SignIn> {
               )),
           SizedBox(height: 20),
           SizedBox(
-            height: 59,
+            height: 54,
             width: MediaQuery.of(context).size.width*0.95,
             child: DropdownButtonFormField<String>(
                 decoration: InputDecoration(
@@ -211,7 +222,7 @@ class _SignInState extends State<SignIn> {
                 items: items
                 .map((item) => DropdownMenuItem<String>(
                   value: item,
-                    child: Text(item, style: TextStyle(fontSize: 20),))).toList(),
+                    child: Text(item, style: TextStyle(fontSize: 14),))).toList(),
                 onChanged: (items) => setState(() {
                   selectedItem = items;
                 }) ),
@@ -288,7 +299,7 @@ class _SignInState extends State<SignIn> {
                 userSignIn(Login(
                       email: _email.text,
                       password: _password.text,
-                      role: selectedItem,
+                      role: changeRole(selectedItem),
 
                     ));
 
@@ -352,3 +363,16 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
+
+
+
+// String changeRole(index){
+//   switch(index){
+//     case 0:
+//       return "service";
+//     case 1:
+//       return "renter";
+//     default:
+//       return "renter";
+//   }
+// }

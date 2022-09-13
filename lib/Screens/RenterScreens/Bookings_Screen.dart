@@ -41,69 +41,85 @@ class _RenterBookingState extends State<RenterBooking> {
               width: 436,
               height: 63,
               color: Colors.white,
-
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        index=0;
+                        index = 0;
                       });
                     },
                     child: Column(
                       children: [
                         Container(
                             height: 40,
-                            width: MediaQuery.of(context).size.width*.5-1,
-                            color: Colors.white,
-                            child: Center(child: Text("My Booking",style: TextStyle(
-                                fontSize: 20, fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700,
-                                color: index==0?Color(0xff5600d4):Color(0xff727171)
-                            ),))),
+                            width: MediaQuery.of(context).size.width * .5 - 1,
+                            color: index == 0
+                                ? Color(0xff5600d4)
+                                : Colors.white,
+                            child: Center(
+                                child: Text(
+                                  "Booking Received",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w700,
+                                      color: index == 0
+                                          ? Colors.white
+                                          : Color(0xff5600d4)),
+                                ))),
                         Container(
                             height: 5,
-                            width: MediaQuery.of(context).size.width*.5-1,
-                            color:  index==0?Color(0xff5600d4):Color(0xff727171)
-
-                        )
+                            width: MediaQuery.of(context).size.width * .5 - 1,
+                            color: index == 0
+                                ? Color(0xff5600d4)
+                                : Color(0xff727171))
                       ],
                     ),
                   ),
-
-                  Container(height: 46,width: 2,color: Colors.grey,),
-
+                  Container(
+                    height: 46,
+                    width: 2,
+                    color: Colors.grey,
+                  ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        index=1;
+                        index = 1;
                       });
                     },
                     child: Column(
                       children: [
                         Container(
                             height: 40,
-                            width: MediaQuery.of(context).size.width*.5-1,
-                            color: Colors.white,
-                            child: Center(child: Text("Booking Closed",style: TextStyle(
-                                fontSize: 20, fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700,
-                                color: index==1?Color(0xff5600d4):Color(0xff727171)
-                            ),))),
+                            width: MediaQuery.of(context).size.width * .5 - 1,
+                            color: index == 1
+                                ? Color(0xff5600d4)
+                                : Colors.white,
+                            child: Center(
+                                child: Text(
+                                  "Booking Closed",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w700,
+                                      color: index == 1
+                                          ? Colors.white
+                                          : Color(0xff5600d4)),
+                                ))),
                         Container(
                             height: 5,
-                            width: MediaQuery.of(context).size.width*.5-1,
-                            color: index==1?Color(0xff5600d4):Color(0xff727171)
-
-                        )
+                            width: MediaQuery.of(context).size.width * .5 - 1,
+                            color: index == 1
+                                ? Color(0xff5600d4)
+                                : Color(0xff727171))
                       ],
                     ),
-                  ),
+                  )
                 ],
-              )
-          ),
+              )),
           ListView.builder(
             shrinkWrap: true,
               itemCount: 1,

@@ -39,6 +39,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool value9= false;
   bool value10= false;
 
+  bool form = false;
+
   final TextEditingController _landmark = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _country = TextEditingController();
@@ -94,7 +96,62 @@ class _ProductDetailsState extends State<ProductDetails> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                child: Image.asset('images/pic1.png'),
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3f000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                  color: Colors.white,
+                ),
+                child: Row(
+                  children:[
+
+                    Text(
+                      "(31 Reviews)",
+                      style: TextStyle(
+                        color: Color(0xff6f6f6f),
+                        fontSize: 16,
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
+                    // Text(
+                    //   "4",
+                    //   style: TextStyle(
+                    //     color: Color(0xff2d2d2d),
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
+                    Icon(
+                      Icons.star,
+                      color: Color(0xff5600d4),
+                      size: 25,
+
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Color(0xff5600d4),
+                      size: 25,
+
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Color(0xff5600d4),
+                      size: 25,
+
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                child: Image.network("https://purpleapp.omkatech.com/${widget.model.productImages![0].url}"),
                 width: 370,
                 height: 199,
                 decoration: BoxDecoration(
@@ -113,7 +170,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                  itemBuilder: (context,index)=> Padding(
                    padding: const EdgeInsets.only(right: 8),
                    child: Container(
-                     child: Image.asset("images/pic2.png"),
+                     child: Image.network("https://purpleapp.omkatech.com/${widget.model.productImages![0].url}"),
                    width: 75,
                    height: 75,
                    decoration: BoxDecoration(
@@ -135,7 +192,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               SizedBox(height: 10,),
               Text(
-                widget.model.oneDayPrice!,
+               ' \$${widget.model.oneDayPrice!} per day',
                 style: TextStyle(
                   color: Color(0xff5600d4),
                   fontSize: 22,
@@ -144,77 +201,86 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(height: 10,),
-              Container(
-                width: 364,
-                height: 115,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x3f000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: Stack(
-                  children:[
-                    Positioned(
-                      left: 38,
-                      top: 22,
-                      child: Text(
-                        "Review",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 22,
-                          fontFamily: "Lato",
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 38,
-                      top: 70,
-                      child: Container(
-                        width: 157.42,
-                        height: 22.42,
-                        child: Stack(
-                          children:[],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 217,
-                      top: 26,
-                      child: Text(
-                        "(31 Reviews)",
-                        style: TextStyle(
-                          color: Color(0xff6f6f6f),
-                          fontSize: 16,
-                          fontFamily: "Lato",
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 217,
-                      top: 75,
-                      child: Text(
-                        "4 out of 5",
-                        style: TextStyle(
-                          color: Color(0xff2d2d2d),
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
+              // Container(
+              //   width: 364,
+              //   height: 115,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(2),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Color(0x3f000000),
+              //         blurRadius: 4,
+              //         offset: Offset(0, 0),
+              //       ),
+              //     ],
+              //     color: Colors.white,
+              //   ),
+              //   child: Stack(
+              //     children:[
+              //       Positioned(
+              //         left: 38,
+              //         top: 22,
+              //         child: Text(
+              //           "Review",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 22,
+              //             fontFamily: "Lato",
+              //             fontWeight: FontWeight.w700,
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         left: 38,
+              //         top: 70,
+              //         child: Container(
+              //           width: 157.42,
+              //           height: 22.42,
+              //           child: Stack(
+              //             children:[],
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         left: 217,
+              //         top: 26,
+              //         child: Text(
+              //           "(31 Reviews)",
+              //           style: TextStyle(
+              //             color: Color(0xff6f6f6f),
+              //             fontSize: 16,
+              //             fontFamily: "Lato",
+              //             fontWeight: FontWeight.w600,
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         left: 217,
+              //         top: 75,
+              //         child: Text(
+              //           "4 out of 5",
+              //           style: TextStyle(
+              //             color: Color(0xff2d2d2d),
+              //             fontSize: 12,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              SizedBox(height: 10,),
+              Text(
+                "Brand: ${widget.model.brand}",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(height: 10,),
               Text(
-                "Brand: ${widget.model.brand}\n"
-                    "Model:${widget.model.model}",
+                "Model:${widget.model.model}",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -233,7 +299,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(height: 10,),
-              Text("description",
+              Text( widget.model.moreInfo!,
                 style: TextStyle(
                   color: Color(0xff6f6f6f),
                   fontSize: 14,
@@ -797,30 +863,30 @@ class _ProductDetailsState extends State<ProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
+                     Checkbox(
+                          fillColor: MaterialStateProperty.resolveWith<Color>((
+                              states) {
+                            if (states.contains(MaterialState.disabled)) {
+                              return Color(0xff5600d4);
+                            }
                             return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value10, onChanged: (value) {
-                      value10 = !value10;
-                      setState(() {
-
-                      });
-                    }),
+                          }),
+                          value: value10, onChanged: (value) {
+                        setState(() {
+                          value10 = !value10;
+                          form = !form;
+                        });
+                      }),
                     SizedBox(width: 40),
-                    Text(
-                      "Shipping",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  Text(
+                     "Shipping",
+                     style: TextStyle(
+                       color: Color(0xff2d2d2d),
+                       fontSize: 16,
+                       fontFamily: "Lato",
+                       fontWeight: FontWeight.w500,
+                     ),
+                   ),
 
 
                   ],
@@ -879,6 +945,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(height: 10,),
+
+
               ElevatedButton(onPressed: ()async{
                 DateTime? newReturnDate = await showDatePicker(context: context, initialDate: returnDate, firstDate: DateTime(2000) , lastDate: DateTime(2100));
                 if(newReturnDate == null) return;
@@ -890,11 +958,13 @@ class _ProductDetailsState extends State<ProductDetails> {
 
               SizedBox(height: 10,),
 
-              Padding(
+              form? Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal:
                 10),
                 child: addressForm(context),
-              ),
+              ): Container(),
+
+
 
 
               SizedBox(height: 20,),

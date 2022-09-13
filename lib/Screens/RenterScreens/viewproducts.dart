@@ -81,7 +81,7 @@ class _ViewProductsState extends State<ViewProducts> {
               ),
             ),
 
-            FutureBuilder<GetSearchModal>(
+            FutureBuilder<GetCategoryProductModal>(
               future: searchProducts(_search.text),
               builder: (context,snapshot){
                 if (snapshot.hasData){
@@ -89,7 +89,7 @@ class _ViewProductsState extends State<ViewProducts> {
                   return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.data.length,
+                      itemCount: snapshot.data!.category!.data!.length,
                       itemBuilder: (context,index){
                         return Container(
                           width: MediaQuery.of(context).size.width,
@@ -128,7 +128,7 @@ class _ViewProductsState extends State<ViewProducts> {
                                                 onTap: (){
                                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
                                                 },
-                                                child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.data[index].productImages![index].url}"),
+                                                child: Image.network("https://purpleapp.omkatech.com/${snapshot.data!.category!.data![index].productImages![0]}"),
                                               ),
                                             ),
 
@@ -141,7 +141,7 @@ class _ViewProductsState extends State<ViewProducts> {
                                               // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.data[index])));
 
                                             },
-                                              child: Text(  snapshot.data!.data[index].name!,
+                                              child: Text(  snapshot.data!.category!.data![index].name!,
                                                 style: TextStyle(
                                                   color: Color(0xff727171),
                                                   fontSize: 22,
@@ -152,7 +152,7 @@ class _ViewProductsState extends State<ViewProducts> {
                                             ),
                                             SizedBox(height: 20,),
                                             Text(
-                                              "Rent -\$${snapshot.data!.data[index].oneDayPrice}",
+                                              "Rent -\$${snapshot.data!.category!.data![index].oneDayPrice}",
                                               style: TextStyle(
                                                 color: Color(0xff0a0a0a),
                                                 fontSize: 18,
@@ -164,27 +164,28 @@ class _ViewProductsState extends State<ViewProducts> {
                                             GestureDetector(
                                               onTap: (){
                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: DataCategory(
-                                                  id: snapshot.data!.data[index].id,
-                                                  serviceProviderId:snapshot.data!.data[index].serviceProviderId,
-                                                  model:snapshot.data!.data[index].model,
-                                                  brand:snapshot.data!.data[index].brand,
-                                                  manualPdf:snapshot.data!.data[index].manualPdf,
-                                                  weekendPrice:snapshot.data!.data[index].weekendPrice,
-                                                  oneDayPrice:snapshot.data!.data[index].oneDayPrice,
-                                                  twoDayPrice:snapshot.data!.data[index].twoDayPrice,
-                                                  threeDayPrice:snapshot.data!.data[index].threeDayPrice,
-                                                  weeklyPrice:snapshot.data!.data[index].weeklyPrice,
-                                                  package1:snapshot.data!.data[index].package1,
-                                                  package2:snapshot.data!.data[index].package2,
-                                                  package1Price:snapshot.data!.data[index].package1Price,
-                                                  package2Price:snapshot.data!.data[index].package2Price,
-                                                  inventory:snapshot.data!.data[index].inventory,
-                                                  delivery:snapshot.data!.data[index].delivery,
-                                                  shippingCost:snapshot.data!.data[index].shippingCost,
-                                                  moreInfo:snapshot.data!.data[index].moreInfo,
-                                                  termsConditions:snapshot.data!.data[index].termsConditions,
-                                                  categoryId:snapshot.data!.data[index].categoryId,
-                                                  name: snapshot.data!.data[index].name,
+                                                  id: snapshot.data!.category!.data![index].id!,
+                                                  serviceProviderId:snapshot.data!.category!.data![index].serviceProviderId,
+                                                  model:snapshot.data!.category!.data![index].model,
+                                                  brand:snapshot.data!.category!.data![index].model,
+                                                  manualPdf:snapshot.data!.category!.data![index].manualPdf,
+                                                  weekendPrice:snapshot.data!.category!.data![index].weekendPrice,
+                                                  oneDayPrice:snapshot.data!.category!.data![index].oneDayPrice,
+                                                  twoDayPrice:snapshot.data!.category!.data![index].twoDayPrice,
+                                                  threeDayPrice:snapshot.data!.category!.data![index].threeDayPrice,
+                                                  weeklyPrice:snapshot.data!.category!.data![index].weeklyPrice,
+                                                  package1:snapshot.data!.category!.data![index].package1,
+                                                  package2:snapshot.data!.category!.data![index].package2,
+                                                  package1Price:snapshot.data!.category!.data![index].package1Price,
+                                                  package2Price:snapshot.data!.category!.data![index].package2Price,
+                                                  inventory:snapshot.data!.category!.data![index].inventory,
+                                                  delivery:snapshot.data!.category!.data![index].delivery,
+                                                  shippingCost:snapshot.data!.category!.data![index].shippingCost,
+                                                  moreInfo:snapshot.data!.category!.data![index].moreInfo,
+                                                  termsConditions:snapshot.data!.category!.data![index].termsConditions,
+                                                  categoryId:snapshot.data!.category!.data![index].categoryId,
+                                                  name: snapshot.data!.category!.data![index].name,
+                                                  productImages: snapshot.data!.category!.data![index].productImages,
 
 
                                                 ) )));

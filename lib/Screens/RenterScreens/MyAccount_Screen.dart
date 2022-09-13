@@ -11,6 +11,9 @@ import 'package:purpleavapp/Screens/service_provider/home.dart';
 import 'package:purpleavapp/Screens/service_provider/logout.dart';
 import 'package:purpleavapp/main.dart';
 
+import '../../Modal/user_profile_modal.dart';
+import '../../Services/ApiServices.dart';
+
 class MyAccountRenter extends StatefulWidget {
   const MyAccountRenter({Key? key}) : super(key: key);
 
@@ -243,167 +246,159 @@ class _MyAccountRenterState extends State<MyAccountRenter> {
           ],
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: FutureBuilder<UserProfileModel>(
+        future: userProfile(),
+        builder: (context,snapshot){
+          if(snapshot.hasError){
+            return Center(
+              child: Text("something went wrong"),
+            );
+          }
+          if(snapshot.hasData){
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
 
-        children: [
-          SizedBox(height:  MediaQuery.of(context).padding.top),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: CircleAvatar(
-              radius: 40,
-            ),
-          ),
-          SizedBox(height: 10,),
-          Text(
-            "User Name",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontFamily: "Nunito",
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-
-          SizedBox(height: 10,),
-          Text(
-            "username123@gmail.com",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xff2d2d2d),
-              fontSize: 14,
-            ),
-          ),
-
-          SizedBox(height: 40,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Text(
-                  "Name",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w500,
+                children: [
+                  SizedBox(height:  MediaQuery.of(context).padding.top),
+                  SizedBox(height: 30,),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child:
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage:NetworkImage("https://purpleapp.omkatech.com/${snapshot.data!.user.profilePic}"),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Text(
-                  "User name",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2d2d2d),
-                    fontSize: 16,
+                  SizedBox(height: 10,),
+                  Text(
+                    snapshot.data!.user.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: "Nunito",
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
 
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 0.8,
-          ),
-          SizedBox(height: 20,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Text(
-                  "Email",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w500,
+                  SizedBox(height: 10,),
+                  Text(
+                    snapshot.data!.user.email,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xff2d2d2d),
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                Spacer(),
-                Text(
-                  "username123@gmail.com",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2d2d2d),
-                    fontSize: 16,
+
+                  SizedBox(height: 40,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Name",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          snapshot.data!.user.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xff2d2d2d),
+                            fontSize: 16,
+                          ),
+                        ),
+
+                      ],
+                    ),
                   ),
-                ),
-
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 0.8,
-          ),
-          SizedBox(height: 20,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Text(
-                  "Password",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w500,
+                  Divider(
+                    thickness: 0.8,
                   ),
-                ),
-                Spacer(),
-                Text(
-                  "username123",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2d2d2d),
-                    fontSize: 16,
+                  SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Email",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          snapshot.data!.user.email,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xff2d2d2d),
+                            fontSize: 16,
+                          ),
+                        ),
+
+                      ],
+                    ),
                   ),
-                ),
 
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 0.8,
-          ),
-
-          SizedBox(height: 20,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Text(
-                  "Phone No.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w500,
+                  Divider(
+                    thickness: 0.8,
                   ),
-                ),
-                Spacer(),
-                Text(
-                  "01234567890",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2d2d2d),
-                    fontSize: 16,
+
+                  SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Phone No.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          snapshot.data!.user.phone,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xff2d2d2d),
+                            fontSize: 16,
+                          ),
+                        ),
+
+                      ],
+                    ),
                   ),
-                ),
-
-              ],
-            ),
-          ),
 
 
 
 
-        ],
+                ],
+              ),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+
+        },
+
+
       ),
 
 
