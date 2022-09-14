@@ -71,6 +71,10 @@ class _AddProductsState extends State<AddProducts> {
     "Crew",
     "Other"
   ];
+
+  List<File> imageList = [
+
+    ];
   String? selectedItem = 'Audio';
 
   List<String>title=[
@@ -1378,7 +1382,7 @@ class _AddProductsState extends State<AddProducts> {
         SizedBox(height: 40),
         GestureDetector(
           onTap: () {
-            uploadImage(_image1!,_image2, _image3);
+            uploadImage(_image1!);
 
 
           },
@@ -1429,12 +1433,10 @@ class _AddProductsState extends State<AddProducts> {
     }
   }
 
-  Future<bool?> uploadImage(File _image1,_image2,_image3)async{
+  Future<bool?> uploadImage(File imageList)async{
     String? tokenValue = await _services.getToken();
     debugPrint(tokenValue);
-    debugPrint(_image1.path);
-    debugPrint(_image2!.path);
-    debugPrint(_image3!.path);
+    debugPrint(imageList.path);
     debugPrint(_file.toString());
     debugPrint(_equipment.text);
     debugPrint(_model.text);
@@ -1452,8 +1454,8 @@ class _AddProductsState extends State<AddProducts> {
     debugPrint(_termsAndConditons.text);
     debugPrint(_inventory.text);
     debugPrint(_delivery.text);
-    var stream = http.ByteStream(DelegatingStream.typed(_image1.openRead()));
-    var length = await _image1.length();
+    var stream = http.ByteStream(DelegatingStream.typed(imageList.openRead()));
+    var length = await imageList.length();
     Map<String, String> headers = { "Authorization": "Bearer $tokenValue"};
     var uri =Uri.parse("https://purpleapp.omkatech.com/api/products",
       );
@@ -1483,9 +1485,9 @@ class _AddProductsState extends State<AddProducts> {
     request.fields["city"] = _delivery.text;
     request.fields["postal_code"] = _delivery.text;
 
-    var multipartFile= http.MultipartFile('images[]', stream, length,filename: _image1.path);
+    var multipartFile= http.MultipartFile('images[]', stream, length,filename: imageList.path);
     request.files.add(multipartFile);
-    bool? result = await request.send().then((response) async{
+     await request.send().then((response) async{
 
       response.stream.transform(utf8.decoder).listen((value) async {
 
@@ -1710,6 +1712,8 @@ class _AddProductsState extends State<AddProducts> {
         return "1";
     }
   }
+
+
 
 
 }

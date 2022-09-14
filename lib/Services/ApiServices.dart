@@ -292,12 +292,11 @@ Future<GetBookingModal> getAllBookings() async {
   }
 }
 
-Future<GetCategoryProductModal> searchProducts(search) async {
+Future<GetSearchModal> searchProducts(search) async {
   print(search);
 
   String url = "https://purpleapp.omkatech.com/api/search/$search";
 
-  print(search);
 
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200 || response.statusCode == 400) {
@@ -305,7 +304,7 @@ Future<GetCategoryProductModal> searchProducts(search) async {
 
     print("guri");
 
-    return getCategoryProductModalFromJson(response.body);
+    return getSearchModalFromJson(response.body);
   } else {
     throw Exception("Failed to load data");
   }
@@ -315,7 +314,6 @@ Future<GetCategoryProductModal> categorySearch(id) async {
   String url = "https://purpleapp.omkatech.com/api/category/${id}";
 
   final response = await http.get(Uri.parse(url));
-  print(json.decode(response.body));
 
   print("guri");
   if (response.statusCode == 200 || response.statusCode == 400) {

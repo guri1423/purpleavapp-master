@@ -4,24 +4,24 @@ import 'dart:convert';
 
 class EditProduct {
   EditProduct({
-    required this.name,
-    required this.model,
-    required this.brand,
-    required this.weekendPrice,
-    required this.oneDayPrice,
-    required this.twoDayPrice,
-    required this.threeDayPrice,
-    required this.weeklyPrice,
-    required this.package1,
-    required this.package2,
-    required this.package1Price,
-    required this.package2Price,
-    required this.inventory,
-    required this.termsConditions,
-    required this.moreInfo,
-    required this.categoryId,
-    required this.delivery,
-    required this.shippingCost,
+     this.name,
+     this.model,
+     this.brand,
+     this.weekendPrice,
+     this.oneDayPrice,
+     this.twoDayPrice,
+     this.threeDayPrice,
+     this.weeklyPrice,
+     this.package1,
+     this.package2,
+     this.package1Price,
+     this.package2Price,
+     this.inventory,
+     this.termsConditions,
+     this.moreInfo,
+     this.categoryId,
+     this.delivery,
+     this.shippingCost,
     this.address,
     this.landmark,
     this.country,
@@ -32,10 +32,9 @@ class EditProduct {
   });
 
 
-  String name;
-
-  String model;
-  String brand;
+  String? name;
+  String? model;
+  String? brand;
   String? weekendPrice;
   String? oneDayPrice;
   String? twoDayPrice;

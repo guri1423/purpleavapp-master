@@ -509,6 +509,8 @@ class _SignUpState extends State<SignUp> {
           // debugPrint(value);
           debugPrint(fromJson(json.decode(value)));
           debugPrint(getToken(json.decode(value)));
+          String checkStatus = status(json.decode(value));
+          debugPrint(checkStatus);
           _services.storeEmail(_emailController.text);
           _services.storeToken(getToken(json.decode(value)));
           setState(() {
@@ -523,12 +525,10 @@ class _SignUpState extends State<SignUp> {
             else { Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
             ), (route) => false);}
           }
-          else {
-            print("something went wrong");
-            Fluttertoast.showToast(msg: "Something went wrong");
-
-          }
-
+          if(checkStatus == "false"){
+            debugPrint("Not added");
+            String msg = fromJson(json.decode(value));
+            Fluttertoast.showToast(msg: msg);
 
 
 
@@ -538,7 +538,8 @@ class _SignUpState extends State<SignUp> {
 
 
 
-        });
+
+        }});
       }).catchError((e){
         print(e);
       });
@@ -549,6 +550,10 @@ class _SignUpState extends State<SignUp> {
     }
  String getToken(Map<String, dynamic> json) =>
  json["token"];
+    String fromJson(Map<String, dynamic> json) =>
+        json["message"];
+    String status(Map<String, dynamic> json) =>
+        json["status"];
 
 
 
