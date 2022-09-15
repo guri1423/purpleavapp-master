@@ -121,7 +121,7 @@ Future<bool?> userRegister(Register model) async {
       return false;
     }
   } else {
-    throw Exception("Failed to load data");
+      debugPrint(response.body);
   }
 }
 
@@ -146,7 +146,7 @@ Future<bool?> userLogin(Login model) async {
       return false;
     }
   } else {
-    throw Exception("Failed to load data");
+    debugPrint(response.body);
   }
 }
 

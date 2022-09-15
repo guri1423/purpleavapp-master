@@ -531,15 +531,9 @@ class _SignUpState extends State<SignUp> {
             Fluttertoast.showToast(msg: msg);
 
 
-
-
-
-
-
-
-
-
-        }});
+          }
+        }
+        );
       }).catchError((e){
         print(e);
       });

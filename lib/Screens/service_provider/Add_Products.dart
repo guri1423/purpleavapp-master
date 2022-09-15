@@ -1462,6 +1462,7 @@ class _AddProductsState extends State<AddProducts> {
     debugPrint(_delivery.text);
     var stream = http.ByteStream(DelegatingStream.typed(_image1.openRead()));
     var length = await _image1.length();
+
     Map<String, String> headers = { "Authorization": "Bearer $tokenValue"};
     var uri =Uri.parse("https://purpleapp.omkatech.com/api/products",
       );

@@ -218,13 +218,13 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
                 width:MediaQuery.of(context).size.width,
                 height: 75,
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: widget.model.productImages!.length,
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemBuilder: (context,index)=> Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Container(
-                      child: Image.network("https://purpleapp.omkatech.com/${widget.model.productImages![0]["url"]}"),
+                      child: Image.network("https://purpleapp.omkatech.com/${widget.model.productImages![index]["url"]}"),
                       width: 75,
                       height: 75,
                       decoration: BoxDecoration(
