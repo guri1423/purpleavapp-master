@@ -10,7 +10,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:purpleavapp/Modal/post_product_model.dart';
 import 'package:purpleavapp/Screens/service_provider/My_Products.dart';
-import 'package:purpleavapp/Screens/service_provider/home.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
 import 'package:purpleavapp/Services/storage_services.dart';
 
@@ -60,6 +59,7 @@ class _AddProductsState extends State<AddProducts> {
     false,
     false,
   ];
+  List<File?>imageList=[];
   List<String>category=[
     "Audio",
     "Video",
@@ -71,10 +71,6 @@ class _AddProductsState extends State<AddProducts> {
     "Crew",
     "Other"
   ];
-
-  List<File> imageList = [
-
-    ];
   String? selectedItem = 'Audio';
 
   List<String>title=[
@@ -401,14 +397,17 @@ class _AddProductsState extends State<AddProducts> {
                                           if (_image1 == null) {
                                             setState(() {
                                               _image1 = File(value!.path);
+                                              imageList.add(_image1);
                                             });
                                           } else if (_image2 == null) {
                                             setState(() {
                                               _image2 = File(value!.path);
+                                              imageList.add(_image2);
                                             });
                                           } else if (_image3 == null) {
                                             setState(() {
                                               _image3 = File(value!.path);
+                                              imageList.add(_image3);
                                             });
                                           } else if (_image4 == null) {
                                             setState(() {
@@ -451,14 +450,18 @@ class _AddProductsState extends State<AddProducts> {
                                           if (_image1 == null) {
                                             setState(() {
                                               _image1 = File(value!.path);
+                                              imageList.add(_image1);
                                             });
                                           } else if (_image2 == null) {
                                             setState(() {
                                               _image2 = File(value!.path);
+                                              imageList.add(_image2);
                                             });
                                           } else if (_image3 == null) {
                                             setState(() {
                                               _image3 = File(value!.path);
+                                              imageList.add(_image3);
+
                                             });
                                           } else if (_image4 == null) {
                                             setState(() {
@@ -507,7 +510,7 @@ class _AddProductsState extends State<AddProducts> {
         },
           child: Container(
             width: 365,
-            height: 103,
+            height: 203,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -521,7 +524,15 @@ class _AddProductsState extends State<AddProducts> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-
+                Text(
+                  "(345×255 or larger recommended, up to )",
+                  style: TextStyle(
+                    color: Color(0xffa3a3a3),
+                    fontSize: 14,
+                    fontFamily: "Lato",
+                    fontWeight: FontWeight.w700,
+                  ),
+                )
               ],
             ),
 
@@ -542,9 +553,10 @@ class _AddProductsState extends State<AddProducts> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: 4,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   List<File?>name = [
                     _image1,
@@ -553,6 +565,7 @@ class _AddProductsState extends State<AddProducts> {
                     _image4,
                     _image5,
                   ];
+
                   return Padding(padding: EdgeInsets.only(right: MediaQuery
                       .of(context)
                       .size
@@ -1182,68 +1195,58 @@ class _AddProductsState extends State<AddProducts> {
         ),
 
 
-        SizedBox(height: 10,),
-        Text(
-          "Delivery & Pickup *",
-          style: TextStyle(
-            color: Color(0xff0a0a0a),
-            fontSize: 18,
-            fontFamily: "Lato",
-            fontWeight: FontWeight.w700,
+        SizedBox(height: 5,),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              if (delivery) {
+                delivery = false;
+              } else {
+                delivery = true;
+              }
+            });
+          },
+          child: Container(
+              width: 365,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Delivery & Pickup *",
+                      style: TextStyle(
+                        color: Color(0xffb9b9b9),
+                        fontSize: 16,
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.w500,
+                      ),),
+
+                    delivery ? Icon(Icons.keyboard_arrow_up) : Icon(
+                        Icons.keyboard_arrow_down)
+                  ],
+                ),
+              )
+            // TextField(
+            //   decoration: InputDecoration(
+            //     border: InputBorder.none,
+            //     hintText: 'Price',
+            //     hintStyle: TextStyle(
+            //       color: Color(0xffb9b9b9),
+            //       fontSize: 16,
+            //       fontFamily: "Lato",
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //   ),
+            // ),
           ),
         ),
-        SizedBox(height: 5,),
-        // GestureDetector(
-        //   onTap: () {
-        //     setState(() {
-        //       if (delivery) {
-        //         delivery = false;
-        //       } else {
-        //         delivery = true;
-        //       }
-        //     });
-        //   },
-        //   child: Container(
-        //       width: 365,
-        //       height: 50,
-        //       decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(4),
-        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-        //         color: Colors.white,
-        //       ),
-        //       child: Padding(
-        //         padding: const EdgeInsets.symmetric(horizontal: 15),
-        //         child: Row(
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //           children: [
-        //             Text("Delivery & Pickup *",
-        //               style: TextStyle(
-        //                 color: Color(0xffb9b9b9),
-        //                 fontSize: 16,
-        //                 fontFamily: "Lato",
-        //                 fontWeight: FontWeight.w500,
-        //               ),),
-        //
-        //             delivery ? Icon(Icons.keyboard_arrow_up) : Icon(
-        //                 Icons.keyboard_arrow_down)
-        //           ],
-        //         ),
-        //       )
-        //     // TextField(
-        //     //   decoration: InputDecoration(
-        //     //     border: InputBorder.none,
-        //     //     hintText: 'Price',
-        //     //     hintStyle: TextStyle(
-        //     //       color: Color(0xffb9b9b9),
-        //     //       fontSize: 16,
-        //     //       fontFamily: "Lato",
-        //     //       fontWeight: FontWeight.w500,
-        //     //     ),
-        //     //   ),
-        //     // ),
-        //   ),
-        // ),
 
         /// here I have imported my custom dropdown
         /// just change list content name
@@ -1384,7 +1387,10 @@ class _AddProductsState extends State<AddProducts> {
           onTap: () {
             uploadImage(_image1!);
 
-
+            setState(() {
+              form = false;
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProducts()));
+            });
           },
           child: Container(
               height: 50,
@@ -1433,10 +1439,10 @@ class _AddProductsState extends State<AddProducts> {
     }
   }
 
-  Future<bool?> uploadImage(File imageList)async{
+  void uploadImage(File _image1)async{
     String? tokenValue = await _services.getToken();
     debugPrint(tokenValue);
-    debugPrint(imageList.path);
+    debugPrint(_image1.path);
     debugPrint(_file.toString());
     debugPrint(_equipment.text);
     debugPrint(_model.text);
@@ -1454,11 +1460,12 @@ class _AddProductsState extends State<AddProducts> {
     debugPrint(_termsAndConditons.text);
     debugPrint(_inventory.text);
     debugPrint(_delivery.text);
-    var stream = http.ByteStream(DelegatingStream.typed(imageList.openRead()));
-    var length = await imageList.length();
+    var stream = http.ByteStream(DelegatingStream.typed(_image1.openRead()));
+    var length = await _image1.length();
     Map<String, String> headers = { "Authorization": "Bearer $tokenValue"};
     var uri =Uri.parse("https://purpleapp.omkatech.com/api/products",
       );
+
     var request=http.MultipartRequest("POST", uri);
     request.headers.addAll(headers);
     request.fields["name"] = _equipment.text;
@@ -1485,9 +1492,23 @@ class _AddProductsState extends State<AddProducts> {
     request.fields["city"] = _delivery.text;
     request.fields["postal_code"] = _delivery.text;
 
-    var multipartFile= http.MultipartFile('images[]', stream, length,filename: imageList.path);
-    request.files.add(multipartFile);
-     await request.send().then((response) async{
+    // var multipartFile= http.MultipartFile('images[]', stream, length,filename: _image1.path);
+
+    List<http.MultipartFile> newList = <http.MultipartFile>[];
+
+    for (int i = 0; i < imageList.length; i++) {
+      var path =  imageList[i]!.path;
+      File imageFile =  File(path);
+
+      var stream =  http.ByteStream(imageFile.openRead());
+      var length = await imageFile.length();
+
+      var multipartFile =  http.MultipartFile("images[]", stream, length,
+          filename: imageFile.path);
+      newList.add(multipartFile);
+    }
+    request.files.addAll(newList);
+    await request.send().then((response) async{
 
       response.stream.transform(utf8.decoder).listen((value) async {
 
@@ -1500,10 +1521,6 @@ class _AddProductsState extends State<AddProducts> {
           Fluttertoast.showToast(msg: msg);
         }else{
           debugPrint("added");
-          setState(() {
-            form = false;
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-          });
         }
 
 
@@ -1712,8 +1729,6 @@ class _AddProductsState extends State<AddProducts> {
         return "1";
     }
   }
-
-
 
 
 }
