@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:purpleavapp/Modal/SignIn_Modal.dart';
@@ -142,11 +143,16 @@ Future<bool?> userLogin(Login model) async {
       _services.storeToken(getToken(json.decode(response.body)));
 
       return true;
-    } else {
-      return false;
     }
   } else {
     debugPrint(response.body);
+    Fluttertoast.showToast(msg: response.body,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
 

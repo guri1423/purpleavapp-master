@@ -208,7 +208,7 @@ class _MyProductsState extends State<MyProducts> {
                                                                           height: 38,
                                                                           decoration: BoxDecoration(
                                                                             borderRadius: BorderRadius.circular(4),
-                                                                            color: Colors.red.shade500,
+                                                                            color: Color(0xff5600d4),
                                                                           ),
                                                                           child: SizedBox(
                                                                             width: 57.61,

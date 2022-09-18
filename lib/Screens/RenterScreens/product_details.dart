@@ -1,9 +1,13 @@
 
+import 'dart:io';
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:purpleavapp/Modal/renter_model/add_to_cart_modal.dart';
 import 'package:purpleavapp/Modal/renter_model/category_search_modal.dart';
 import 'package:purpleavapp/Screens/RenterScreens/Cart_Screen.dart';
@@ -66,6 +70,9 @@ class _ProductDetailsState extends State<ProductDetails> {
        counter = max(1, counter - 10);
      });
    }
+
+   String? url;
+   String? name;
 
 
 
@@ -327,23 +334,32 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(height: 10,),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Download Manual PDF",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: (){
+                  debugPrint('downloading start');
+                  openFile(
+                      url: 'https://www.africau.edu/images/default/sample.pdf',
+                          fileName : 'sample.pdf');
+
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Download Manual PDF",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontFamily: "Lato",
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                width: 365,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
-                  color: Color(0xff5600d4),
+                  width: 365,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+                    color: Color(0xff5600d4),
+                  ),
                 ),
               ),
               SizedBox(height: 10,),
@@ -1103,6 +1119,37 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   dynamic totalPrice(){
      return (counter* double.parse(widget.model.oneDayPrice!));
+  }
+
+  Future openFile({ String? url, String? fileName}) async {
+    await downloadFile(url: url, name: fileName!);
+    // if (file == null) return;
+    // print('Path: ${file.path}');
+    //
+    // OpenFile.open(file.path);
+
+  }
+
+  Future<File?> downloadFile( { String? url, String? name}) async{
+     final appStorage = await getApplicationDocumentsDirectory();
+     final file = File('${appStorage.path}/$name');
+
+     try {
+       final response = await Dio().get(url!,
+         options: Options(
+             responseType: ResponseType.bytes,
+             followRedirects: false,
+             receiveTimeout: 0
+         ),
+       );
+       final raf = file.openSync(mode: FileMode.write);
+       raf.writeFromSync(response.data);
+       await raf.close();
+
+       return file;
+     } catch (e){
+       return null;
+     }
   }
 
 

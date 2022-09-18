@@ -98,9 +98,8 @@ class _SignInState extends State<SignIn> {
       ), (route) => false);}
     }
     if(status) {
+
       debugPrint('try again');
-
-
     }
   }
 

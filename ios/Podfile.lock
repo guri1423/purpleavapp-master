@@ -45,6 +45,8 @@ PODS:
     - Toast
   - image_picker_ios (0.0.1):
     - Flutter
+  - open_file (0.0.1):
+    - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
   - SDWebImage (5.13.0):
@@ -63,6 +65,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - open_file (from `.symlinks/plugins/open_file/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
 
@@ -89,6 +92,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/fluttertoast/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  open_file:
+    :path: ".symlinks/plugins/open_file/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   smart_auth:
@@ -104,6 +109,7 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
+  open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   SDWebImage: 0327043dbb9533e75f2eff8445b3df0f2ceca6ac
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2

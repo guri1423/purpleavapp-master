@@ -528,7 +528,13 @@ class _SignUpState extends State<SignUp> {
           if(checkStatus == "false"){
             debugPrint("Not added");
             String msg = fromJson(json.decode(value));
-            Fluttertoast.showToast(msg: msg);
+            Fluttertoast.showToast(msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 2,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
 
 
           }
