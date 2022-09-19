@@ -1,13 +1,15 @@
 
 import 'dart:io';
 import 'dart:math';
-
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:purpleavapp/Modal/renter_model/add_to_cart_modal.dart';
 import 'package:purpleavapp/Modal/renter_model/category_search_modal.dart';
 import 'package:purpleavapp/Screens/RenterScreens/Cart_Screen.dart';
@@ -337,9 +339,10 @@ class _ProductDetailsState extends State<ProductDetails> {
               GestureDetector(
                 onTap: (){
                   debugPrint('downloading start');
-                  openFile(
-                      url: 'https://www.africau.edu/images/default/sample.pdf',
-                          fileName : 'sample.pdf');
+                  // openFile(
+                  //     url: 'https://www.africau.edu/images/default/sample.pdf',
+                  //         fileName : 'sample.pdf');
+                  loadPdfFromNetwork('https://www.africau.edu/images/default/sample.pdf');
 
                 },
                 child: Container(
@@ -1119,6 +1122,101 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   dynamic totalPrice(){
      return (counter* double.parse(widget.model.oneDayPrice!));
+  }
+
+  Future<Future<bool?>> loadPdfFromNetwork(String url) async {
+    final response = await http.get(Uri.parse(url));
+    final bytes = response.bodyBytes;
+    return _storeFile(url, bytes);
+  }
+
+
+
+  Future<bool?> _storeFile(String url, List<int> bytes) async {
+  var status = await Permission.storage.status;
+    try {
+      if (status.isDenied) {
+        await Permission.storage.request();
+        Directory? directory;
+        directory = await getExternalStorageDirectory();
+        String newPath = "";
+        List<String> paths = directory!.path.split("/");
+        for (int x = 1; x < paths.length; x++) {
+          String folder = paths[x];
+          if (folder != "Android") {
+            newPath += "/" + folder;
+          } else {
+            break;
+          }
+        }
+        newPath = newPath + "/PDF_Download";
+        directory = Directory(newPath);
+        File saveFile = File(directory.path);
+        if (kDebugMode) {
+          print(saveFile.path);
+        }
+        if (!await directory.exists()) {
+          await directory.create(recursive: true);
+        }
+        if (await directory.exists()) {
+          await Dio().download(
+            url,
+            saveFile.path,
+            onReceiveProgress: (received,total){
+              debugPrint(received.toString());
+
+            }
+          );
+          return true;
+        }
+
+      }
+      else{
+        debugPrint('hand');
+        Directory? directory;
+        directory = await getExternalStorageDirectory();
+        String newPath = "";
+        List<String> paths = directory!.path.split("/");
+        for (int x = 1; x < paths.length; x++) {
+          String folder = paths[x];
+          if (folder != "Android") {
+            newPath += "/" + folder;
+          } else {
+            break;
+          }
+        }
+        newPath = newPath + "/PDF_Download";
+        directory = Directory(newPath);
+        File saveFile = File(directory.path + '/latestFile');
+        if (kDebugMode) {
+          print(saveFile.path);
+        }
+        if (!await directory.exists()) {
+          debugPrint("not exist");
+          await directory.create();
+          debugPrint(directory.exists().toString());
+        }
+        if (await directory.exists()) {
+          debugPrint('dnbjkmjnhbjkjn');
+          await Dio().download(
+            url,
+            saveFile.path,
+              onReceiveProgress: (received,total){
+                debugPrint(received.toString());
+
+              }
+          );
+          debugPrint('d&&&&&&&&&&&&&');
+          return true;
+        }
+
+      }
+
+
+    } catch(e){
+
+    }
+
   }
 
   Future openFile({ String? url, String? fileName}) async {

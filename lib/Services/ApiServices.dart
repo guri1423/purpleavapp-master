@@ -436,7 +436,7 @@ debugPrint(body.toString());
       return false;
     }
   } else {
-    throw Exception('Failed to load data');
+
   }
 
 }
