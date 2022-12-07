@@ -1,23 +1,21 @@
 
 import 'dart:io';
 import 'dart:math';
+import 'package:file_utils/file_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:open_file/open_file.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:purpleavapp/Modal/renter_model/add_to_cart_modal.dart';
 import 'package:purpleavapp/Modal/renter_model/category_search_modal.dart';
 import 'package:purpleavapp/Screens/RenterScreens/Cart_Screen.dart';
+import 'package:purpleavapp/Screens/service_provider/SignUp.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
-
-import '../../Modal/renter_model/book_product_from_cart.dart';
-import '../../Modal/renter_model/product_model.dart';
-import '../../Modal/renter_model/search_modal.dart';
 
 class ProductDetails extends StatefulWidget {
   DataCategory model;
@@ -47,6 +45,13 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   bool form = false;
 
+  // bool downloading = false;
+  var progress = "";
+  var path = "No Data";
+  var platformVersion = "Unknown";
+  var _onPressed;
+  late Directory externalDir;
+
   final TextEditingController _landmark = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _country = TextEditingController();
@@ -54,8 +59,66 @@ class _ProductDetailsState extends State<ProductDetails> {
   final TextEditingController _city = TextEditingController();
   final TextEditingController _postal = TextEditingController();
 
+  String convertCurrentDateTimeToString() {
+    String formattedDateTime =
+    DateFormat('yyyyMMdd_kkmmss').format(DateTime.now()).toString();
+    return formattedDateTime;
+  }
+
+  Future<void> downloadFile(String pdfUrl) async {
+    Dio dio = Dio();
+
+
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      String dirloc = "";
+      if (Platform.isAndroid) {
+        dirloc = "/sdcard/download/";
+      } else {
+        dirloc = (await getApplicationDocumentsDirectory()).path;
+      }
+
+      try {
+        FileUtils.mkdir([dirloc]);
+        await dio.download(pdfUrl, dirloc + convertCurrentDateTimeToString() + ".pdf",
+            onReceiveProgress: (receivedBytes, totalBytes) {
+              print('here 1');
+              setState(() {
+                // downloading = true;
+
+                progress = ((receivedBytes / totalBytes) * 100).toStringAsFixed(0) + "%";
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Downloading File: $progress')));
+                print(progress);
+              });
+              print('here 2');
+            });
+      } catch (e) {
+        print('catch catch catch');
+        print(e);
+      }
+
+      setState(() {
+        progress = "Download Completed.";
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(' $progress')));
+
+
+        path = dirloc + convertCurrentDateTimeToString() + ".pdf";
+      });
+      print(path);
+      print('here give alert-->completed');
+    } else {
+      setState(() {
+        progress = "Permission Denied!";
+        _onPressed = () {
+          downloadFile(pdfUrl);
+        };
+      });
+    }
+  }
+
+
   DateTime date= DateTime(2022,12,24);
-  DateTime returnDate= DateTime(2023,12,29);
+  DateTime returnDate= DateTime(2022,12,29);
 
 
 
@@ -338,11 +401,10 @@ class _ProductDetailsState extends State<ProductDetails> {
               SizedBox(height: 10,),
               GestureDetector(
                 onTap: (){
-                  debugPrint('downloading start');
-                  // openFile(
-                  //     url: 'https://www.africau.edu/images/default/sample.pdf',
-                  //         fileName : 'sample.pdf');
-                  loadPdfFromNetwork('https://www.africau.edu/images/default/sample.pdf');
+
+
+                  // loadPdfFromNetwork("https://purpleapp.omkatech.com/${widget.model.manualPdf}");
+                 downloadFile("https://purpleapp.omkatech.com/${widget.model.manualPdf}");
 
                 },
                 child: Container(
@@ -440,397 +502,397 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Choose Rent Options",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                width: 365,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
-                  color: Color(0xfff0f0f0),
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value1, onChanged: (value) {
-                      value1 = !value1;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Three day Rental Price",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                        "\$${widget.model.threeDayPrice}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value2, onChanged: (value) {
-                      value2 = !value2;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Weekend Special",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "\$${widget.model.weekendPrice}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value3, onChanged: (value) {
-                      value3 = !value3;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "One day Price",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "\$${widget.model.oneDayPrice}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value4, onChanged: (value) {
-                      value4 = !value4;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Two day Rental Price",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                        "\$${widget.model.twoDayPrice}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value5, onChanged: (value) {
-                      value5 = !value5;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Three day Rental Price",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "\$${widget.model.twoDayPrice}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value6, onChanged: (value) {
-                      value6 = !value6;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Weekly Rental Price",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "\$${widget.model.weeklyPrice}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text(
-                "Packages",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: "Lato",
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value7, onChanged: (value) {
-                      value7 = !value7;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Package 1",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                    "\$${widget.model.package1Price}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                width: 351,
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                            states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Color(0xff5600d4);
-                          }
-                          return Color(0xff5600d4);
-                        }),
-                        value: value8, onChanged: (value) {
-                      value8 = !value8;
-                      setState(() {
-
-                      });
-                    }),
-                    SizedBox(width: 40),
-                    Text(
-                      "Package 2",
-                      style: TextStyle(
-                        color: Color(0xff2d2d2d),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "\$${widget.model.package2Price}",
-                      style: TextStyle(
-                        color: Color(0xff5600d4),
-                        fontSize: 18,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
+              // SizedBox(height: 10,),
+              // Container(
+              //   alignment: Alignment.center,
+              //   child: Text(
+              //     "Choose Rent Options",
+              //     style: TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 16,
+              //       fontFamily: "Lato",
+              //       fontWeight: FontWeight.w600,
+              //     ),
+              //   ),
+              //   width: 365,
+              //   height: 50,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(4),
+              //     border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+              //     color: Color(0xfff0f0f0),
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value1, onChanged: (value) {
+              //         value1 = !value1;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Three day Rental Price",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //           "\$${widget.model.threeDayPrice}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value2, onChanged: (value) {
+              //         value2 = !value2;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Weekend Special",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //         "\$${widget.model.weekendPrice}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value3, onChanged: (value) {
+              //         value3 = !value3;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "One day Price",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //         "\$${widget.model.oneDayPrice}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value4, onChanged: (value) {
+              //         value4 = !value4;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Two day Rental Price",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //           "\$${widget.model.twoDayPrice}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value5, onChanged: (value) {
+              //         value5 = !value5;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Three day Rental Price",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //         "\$${widget.model.twoDayPrice}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value6, onChanged: (value) {
+              //         value6 = !value6;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Weekly Rental Price",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //         "\$${widget.model.weeklyPrice}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Text(
+              //   "Packages",
+              //   style: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 16,
+              //     fontFamily: "Lato",
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value7, onChanged: (value) {
+              //         value7 = !value7;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Package 1",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //       "\$${widget.model.package1Price}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // Container(
+              //   width: 351,
+              //   height: 22,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Checkbox(
+              //           fillColor: MaterialStateProperty.resolveWith<Color>((
+              //               states) {
+              //             if (states.contains(MaterialState.disabled)) {
+              //               return Color(0xff5600d4);
+              //             }
+              //             return Color(0xff5600d4);
+              //           }),
+              //           value: value8, onChanged: (value) {
+              //         value8 = !value8;
+              //         setState(() {
+              //
+              //         });
+              //       }),
+              //       SizedBox(width: 40),
+              //       Text(
+              //         "Package 2",
+              //         style: TextStyle(
+              //           color: Color(0xff2d2d2d),
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //         "\$${widget.model.package2Price}",
+              //         style: TextStyle(
+              //           color: Color(0xff5600d4),
+              //           fontSize: 18,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
               Text(
                 "Delivery or Pickup: ",
                 style: TextStyle(
@@ -996,16 +1058,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                   bool? status = await productAddToCart(AddCart(
                     productId:widget.model.id.toString() ,
                     quantity: counter.toString() ,
-                    rent: rentType(),
-                    rentPrice:rentPrice() ,
-                    package: packageType(),
-                    packagePrice: packagePrice(),
+                    rent: "One Day",
+                    rentPrice: widget.model.oneDayPrice ,
+                    // package: packageType(),
                     delivery: deliveryMethod(),
                     startDate: date.toString(),
                     endDate: returnDate.toString(),
                     totalAmount: totalPrice().toString(),
 
-                  ));
+                  )
+
+                  );
+                  debugPrint(widget.model.id.toString());
+                  debugPrint(counter.toString() );
+                  debugPrint(widget.model.oneDayPrice);
+                  debugPrint(deliveryMethod());
+                  debugPrint(date.toString());
+                  debugPrint(returnDate.toString());
+                  debugPrint(totalPrice().toString());
+
+                  debugPrint(status.toString());
+
                   if(status!){
                     debugPrint("added");
                     Fluttertoast.showToast(msg: status.toString());
@@ -1073,19 +1146,24 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
   }
   String rentPrice(){
-    if(value1 == true){
-      return widget.model.threeDayPrice!;
-    }else if(value2 == true){
-      return widget.model.weekendPrice!;
-    }else if(value3 == true){
+    // if(value1 == true){
+    //   return widget.model.threeDayPrice!;
+    // }
+    //  if(value2 == true){
+    //   return widget.model.weekendPrice!;
+    // }else
+
+      if(value3 == true){
       return widget.model.oneDayPrice!;
-    }else if(value4 == true){
-      return widget.model.twoDayPrice!;
-    }else if(value5 == true){
-      return widget.model.threeDayPrice!;
-    }else if(value6 == true){
-      return widget.model.weeklyPrice!;
-    }else{
+    }
+    // else if(value4 == true){
+    //   return widget.model.twoDayPrice!;
+    // }else if(value5 == true){
+    //   return widget.model.threeDayPrice!;
+    // }else if(value6 == true){
+    //   return widget.model.weeklyPrice!;
+    // }
+    else{
       return widget.model.oneDayPrice!;
     }
   }
@@ -1108,15 +1186,15 @@ class _ProductDetailsState extends State<ProductDetails> {
       return "Package 1";
     }
   }
-  String packagePrice(){
-    if(value7 == true){
-      return widget.model.package1Price!;
-    }else if(value8 == true){
-      return widget.model.package2Price!;
-    }else{
-      return widget.model.package1Price!;
-    }
-  }
+  // String packagePrice(){
+  //   if(value7 == true){
+  //     return widget.model.package1Price!;
+  //   }else if(value8 == true){
+  //     return widget.model.package2Price!;
+  //   }else{
+  //     return widget.model.package1Price!;
+  //   }
+  // }
 
 
 
@@ -1172,7 +1250,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
       }
       else{
-        debugPrint('hand');
+        debugPrint('Permission to download');
         Directory? directory;
         directory = await getExternalStorageDirectory();
         String newPath = "";
@@ -1218,37 +1296,37 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
 
   }
-
-  Future openFile({ String? url, String? fileName}) async {
-    await downloadFile(url: url, name: fileName!);
-    // if (file == null) return;
-    // print('Path: ${file.path}');
-    //
-    // OpenFile.open(file.path);
-
-  }
-
-  Future<File?> downloadFile( { String? url, String? name}) async{
-     final appStorage = await getApplicationDocumentsDirectory();
-     final file = File('${appStorage.path}/$name');
-
-     try {
-       final response = await Dio().get(url!,
-         options: Options(
-             responseType: ResponseType.bytes,
-             followRedirects: false,
-             receiveTimeout: 0
-         ),
-       );
-       final raf = file.openSync(mode: FileMode.write);
-       raf.writeFromSync(response.data);
-       await raf.close();
-
-       return file;
-     } catch (e){
-       return null;
-     }
-  }
+  //
+  // Future openFile({ String? url, String? fileName}) async {
+  //   await downloadFile(url: url, name: fileName!);
+  //   // if (file == null) return;
+  //   // print('Path: ${file.path}');
+  //   //
+  //   // OpenFile.open(file.path);
+  //
+  // }
+  //
+  // Future<File?> downloadFile( { String? url, String? name}) async{
+  //    final appStorage = await getApplicationDocumentsDirectory();
+  //    final file = File('${appStorage.path}/$name');
+  //
+  //    try {
+  //      final response = await Dio().get(url!,
+  //        options: Options(
+  //            responseType: ResponseType.bytes,
+  //            followRedirects: false,
+  //            receiveTimeout: 0
+  //        ),
+  //      );
+  //      final raf = file.openSync(mode: FileMode.write);
+  //      raf.writeFromSync(response.data);
+  //      await raf.close();
+  //
+  //      return file;
+  //    } catch (e){
+  //      return null;
+  //    }
+  // }
 
 
 

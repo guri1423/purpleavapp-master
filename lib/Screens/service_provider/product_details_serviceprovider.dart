@@ -88,6 +88,7 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
   final TextEditingController _state = TextEditingController();
   final TextEditingController _city = TextEditingController();
   final TextEditingController _postal = TextEditingController();
+
   List<bool> value = [
     false,
     false,
@@ -420,181 +421,181 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Choose Rent Options",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                width:  MediaQuery.of(context).size.width,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
-                  color: Color(0xfff0f0f0),
-                ),
-              ),
-              SizedBox(height: 10,),
+              // SizedBox(height: 10,),
+              // Container(
+              //   alignment: Alignment.center,
+              //   child: Text(
+              //     "Choose Rent Options",
+              //     style: TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 16,
+              //       fontFamily: "Lato",
+              //       fontWeight: FontWeight.w600,
+              //     ),
+              //   ),
+              //   width:  MediaQuery.of(context).size.width,
+              //   height: 50,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(4),
+              //     border: Border.all(color: Color(0xffdbdbdb), width: 1.50, ),
+              //     color: Color(0xfff0f0f0),
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
+              // // SizedBox(
+              // //   height: 300,
+              // //   width: MediaQuery.of(context).size.width,
+              // //   child: ListView.builder(
+              // //     itemCount: RentOptionsModel.list.length,
+              // //       physics: NeverScrollableScrollPhysics(),
+              // //       itemBuilder:(context,index){
+              // //       return Row(
+              // //         children: [
+              // //
+              // //           Text(RentOptionsModel.list[index].title,  style: TextStyle(
+              // //         color: Color(0xff2d2d2d),
+              // //         fontSize: 16,
+              // //         fontFamily: "Lato",
+              // //         fontWeight: FontWeight.w500,
+              // //       ),),
+              // //           Spacer(),
+              // //           Text(widget.model.threeDayPrice!),
+              // //         ],
+              // //       );
+              // //       }),
+              // // ),
+              //
+              // SizedBox(height: 5,),
+              // Container(
+              //
+              //   height: 28,
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Text(
+              //         "Weekend Special",
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(widget.model.weekendPrice!),
+              //
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 5,),
+              // Container(
+              //
+              //   height: 28,
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Text(
+              //         "One day Price",
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(widget.model.oneDayPrice!),
+              //
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 5,),
+              // Container(
+              //
+              //   height: 28,
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Text(
+              //         "Two day Rental Price",
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(widget.model.twoDayPrice!),
+              //
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 5,),
+              // Container(
+              //
+              //   height: 28,
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children:[
+              //       Text(
+              //         "Three day Rental Price",
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 16,
+              //           fontFamily: "Lato",
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(widget.model.threeDayPrice!),
+              //
+              //     ],
+              //   ),
+              // ),
+              //
+              // SizedBox(height: 5,),
+              //
+              // SizedBox(height: 10,),
+              // Text(
+              //   "Packages",
+              //   style: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 16,
+              //     fontFamily: "Lato",
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              // ),
+              // SizedBox(height: 10,),
               // SizedBox(
-              //   height: 300,
+              //   height: 100,
               //   width: MediaQuery.of(context).size.width,
               //   child: ListView.builder(
-              //     itemCount: RentOptionsModel.list.length,
+              //       itemCount:RentPackageModel.list.length,
               //       physics: NeverScrollableScrollPhysics(),
               //       itemBuilder:(context,index){
-              //       return Row(
-              //         children: [
+              //         return Row(
+              //           children: [
               //
-              //           Text(RentOptionsModel.list[index].title,  style: TextStyle(
-              //         color: Color(0xff2d2d2d),
-              //         fontSize: 16,
-              //         fontFamily: "Lato",
-              //         fontWeight: FontWeight.w500,
-              //       ),),
-              //           Spacer(),
-              //           Text(widget.model.threeDayPrice!),
-              //         ],
-              //       );
+              //             Text(RentPackageModel.list[index].title,  style: TextStyle(
+              //               color: Color(0xff2d2d2d),
+              //               fontSize: 16,
+              //               fontFamily: "Lato",
+              //               fontWeight: FontWeight.w500,
+              //             ),),
+              //             Text("")
+              //           ],
+              //         );
               //       }),
               // ),
-
-              SizedBox(height: 5,),
-              Container(
-
-                height: 28,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Text(
-                      "Weekend Special",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(widget.model.weekendPrice!),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 5,),
-              Container(
-
-                height: 28,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Text(
-                      "One day Price",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(widget.model.oneDayPrice!),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 5,),
-              Container(
-
-                height: 28,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Text(
-                      "Two day Rental Price",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(widget.model.twoDayPrice!),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 5,),
-              Container(
-
-                height: 28,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    Text(
-                      "Three day Rental Price",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(widget.model.threeDayPrice!),
-
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5,),
-
-              SizedBox(height: 10,),
-              Text(
-                "Packages",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: "Lato",
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10,),
-              SizedBox(
-                height: 100,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                    itemCount:RentPackageModel.list.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder:(context,index){
-                      return Row(
-                        children: [
-
-                          Text(RentPackageModel.list[index].title,  style: TextStyle(
-                            color: Color(0xff2d2d2d),
-                            fontSize: 16,
-                            fontFamily: "Lato",
-                            fontWeight: FontWeight.w500,
-                          ),),
-                          Text("")
-                        ],
-                      );
-                    }),
-              ),
               SizedBox(height: 10,),
               Text(
                 "Delivery or Pickup: ",
@@ -851,51 +852,51 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
 
 
 
-            Row(
-              children: [
-                Checkbox(
-                  fillColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Color(0xff5600d4);
-                    }
-                    return Color(0xff5600d4);
-                  }),
-                  value: value1,
-                  onChanged: (val) {
-                    setState(() {
-                      value1 = val!;
-
-
-                    });
-                  },
-
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("Weekend Special",
-                  style: TextStyle(
-                      fontSize: 16
-                  ),),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.3,
-                  child: TextField(
-                    controller: _weekendPrice,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                )
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       fillColor:
+            //       MaterialStateProperty.resolveWith<Color>((states) {
+            //         if (states.contains(MaterialState.disabled)) {
+            //           return Color(0xff5600d4);
+            //         }
+            //         return Color(0xff5600d4);
+            //       }),
+            //       value: value1,
+            //       onChanged: (val) {
+            //         setState(() {
+            //           value1 = val!;
+            //
+            //
+            //         });
+            //       },
+            //
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     Text("Weekend Special",
+            //       style: TextStyle(
+            //           fontSize: 16
+            //       ),),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.3,
+            //       child: TextField(
+            //         controller: _weekendPrice,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
             SizedBox(height: 5,),
             Row(
               children: [
@@ -942,262 +943,262 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
                 )
               ],
             ),
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                Checkbox(
-                  fillColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Color(0xff5600d4);
-                    }
-                    return Color(0xff5600d4);
-                  }),
-                  value: value3,
-                  onChanged: (val) {
-                    setState(() {
-                      value3 = val!;
-
-
-                    });
-                  },
-
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("Two day Rental Price",
-                  style: TextStyle(
-                      fontSize: 16
-                  ),),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.3,
-                  child: TextField(
-                    controller: _twoDayPrice,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                Checkbox(
-                  fillColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Color(0xff5600d4);
-                    }
-                    return Color(0xff5600d4);
-                  }),
-                  value: value4,
-                  onChanged: (val) {
-                    setState(() {
-                      value4 = val!;
-
-
-                    });
-                  },
-
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("Three day Rental Price",
-                  style: TextStyle(
-                      fontSize: 15
-                  ),),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.3,
-                  child: TextField(
-                    controller: _threeDayPrice,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                Checkbox(
-                  fillColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Color(0xff5600d4);
-                    }
-                    return Color(0xff5600d4);
-                  }),
-                  value: value5,
-                  onChanged: (val) {
-                    setState(() {
-                      value5 = val!;
-                    });
-                  },
-
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("Weekly Rental Price",
-                  style: TextStyle(
-                      fontSize: 16
-                  ),),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.3,
-                  child: TextField(
-                    controller: _weeklyPrice,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                Checkbox(
-                  fillColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Color(0xff5600d4);
-                    }
-                    return Color(0xff5600d4);
-                  }),
-                  value: value6,
-                  onChanged: (val) {
-                    setState(() {
-                      value6 = val!;
-                    });
-                  },
-
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("Package 1",
-                  style: TextStyle(
-                      fontSize: 16
-                  ),),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.3,
-                  child: TextField(
-                    controller: _package1,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                ),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.2,
-                  child: TextField(
-                    controller: _package1Price,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                Checkbox(
-                  fillColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Color(0xff5600d4);
-                    }
-                    return Color(0xff5600d4);
-                  }),
-                  value: value7,
-                  onChanged: (val) {
-                    setState(() {
-                      value7 = val!;
-                    });
-                  },
-
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("Package 2",
-                  style: TextStyle(
-                      fontSize: 16
-                  ),),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.3,
-                  child: TextField(
-                    controller: _package2,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                ),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                    color: Colors.white,
-                  ),
-                  width: MediaQuery.of(context).size.width*0.2,
-                  child: TextField(
-                    controller: _package2Price,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                    ),
-                  ),
-                )
-              ],
-            ),
+            // SizedBox(height: 5,),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       fillColor:
+            //       MaterialStateProperty.resolveWith<Color>((states) {
+            //         if (states.contains(MaterialState.disabled)) {
+            //           return Color(0xff5600d4);
+            //         }
+            //         return Color(0xff5600d4);
+            //       }),
+            //       value: value3,
+            //       onChanged: (val) {
+            //         setState(() {
+            //           value3 = val!;
+            //
+            //
+            //         });
+            //       },
+            //
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     Text("Two day Rental Price",
+            //       style: TextStyle(
+            //           fontSize: 16
+            //       ),),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.3,
+            //       child: TextField(
+            //         controller: _twoDayPrice,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+            // SizedBox(height: 5,),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       fillColor:
+            //       MaterialStateProperty.resolveWith<Color>((states) {
+            //         if (states.contains(MaterialState.disabled)) {
+            //           return Color(0xff5600d4);
+            //         }
+            //         return Color(0xff5600d4);
+            //       }),
+            //       value: value4,
+            //       onChanged: (val) {
+            //         setState(() {
+            //           value4 = val!;
+            //
+            //
+            //         });
+            //       },
+            //
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     Text("Three day Rental Price",
+            //       style: TextStyle(
+            //           fontSize: 15
+            //       ),),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.3,
+            //       child: TextField(
+            //         controller: _threeDayPrice,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+            // SizedBox(height: 5,),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       fillColor:
+            //       MaterialStateProperty.resolveWith<Color>((states) {
+            //         if (states.contains(MaterialState.disabled)) {
+            //           return Color(0xff5600d4);
+            //         }
+            //         return Color(0xff5600d4);
+            //       }),
+            //       value: value5,
+            //       onChanged: (val) {
+            //         setState(() {
+            //           value5 = val!;
+            //         });
+            //       },
+            //
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     Text("Weekly Rental Price",
+            //       style: TextStyle(
+            //           fontSize: 16
+            //       ),),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.3,
+            //       child: TextField(
+            //         controller: _weeklyPrice,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+            // SizedBox(height: 5,),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       fillColor:
+            //       MaterialStateProperty.resolveWith<Color>((states) {
+            //         if (states.contains(MaterialState.disabled)) {
+            //           return Color(0xff5600d4);
+            //         }
+            //         return Color(0xff5600d4);
+            //       }),
+            //       value: value6,
+            //       onChanged: (val) {
+            //         setState(() {
+            //           value6 = val!;
+            //         });
+            //       },
+            //
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     Text("Package 1",
+            //       style: TextStyle(
+            //           fontSize: 16
+            //       ),),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.3,
+            //       child: TextField(
+            //         controller: _package1,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     ),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.2,
+            //       child: TextField(
+            //         controller: _package1Price,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+            // SizedBox(height: 5,),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       fillColor:
+            //       MaterialStateProperty.resolveWith<Color>((states) {
+            //         if (states.contains(MaterialState.disabled)) {
+            //           return Color(0xff5600d4);
+            //         }
+            //         return Color(0xff5600d4);
+            //       }),
+            //       value: value7,
+            //       onChanged: (val) {
+            //         setState(() {
+            //           value7 = val!;
+            //         });
+            //       },
+            //
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     Text("Package 2",
+            //       style: TextStyle(
+            //           fontSize: 16
+            //       ),),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.3,
+            //       child: TextField(
+            //         controller: _package2,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     ),
+            //     Spacer(),
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(4),
+            //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+            //         color: Colors.white,
+            //       ),
+            //       width: MediaQuery.of(context).size.width*0.2,
+            //       child: TextField(
+            //         controller: _package2Price,
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none,
+            //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
             SizedBox(height: 30,),
 
 
@@ -1222,13 +1223,16 @@ class _ProductDetailsRenterState extends State<ProductDetailsRenter> {
 
                 editAllProduct(
                     EditProduct(
-                        weekendPrice: _weekendPrice.text, brand: _brand.text, model: _model.text,
-                    name: _equipment.text, oneDayPrice: _oneDayPrice.text, threeDayPrice: _threeDayPrice.text, package1:_package1.text,
-                  package1Price: _package1Price.text, twoDayPrice: _twoDayPrice.text, inventory: _inventory.text,
-                    package2Price: _package2Price.text, weeklyPrice: _weekendPrice.text, package2: _package2.text ,
-                        categoryId:categoryChange(selectedItem!), landmark: widget.model.pickupAddress!.landmark,
-                        address:widget.model.pickupAddress!.address ,state:widget.model.pickupAddress!.state,city:widget.model.pickupAddress!.city
-                        ,country:widget.model.pickupAddress!.country ,postalCode: widget.model.pickupAddress!.postalCode, moreInfo:widget.model.moreInfo, shippingCost: widget.model.shippingCost, termsConditions: widget.model.termsConditions, delivery: widget.model.delivery ??""
+                         brand: _brand.text, model: _model.text,
+                    name: _equipment.text, oneDayPrice: _oneDayPrice.text,
+                        categoryId:categoryChange(selectedItem!),
+                        landmark: widget.model.pickupAddress!.landmark,
+                        address:widget.model.pickupAddress!.address ,state:widget.model.pickupAddress!.state,
+                        city:widget.model.pickupAddress!.city
+                        ,country:widget.model.pickupAddress!.country ,
+                        postalCode: widget.model.pickupAddress!.postalCode, moreInfo:widget.model.moreInfo,
+                        shippingCost: widget.model.shippingCost, termsConditions: widget.model.termsConditions,
+                        delivery: widget.model.delivery ??""
                     ),
                     productId!,);
 

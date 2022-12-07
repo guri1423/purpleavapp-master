@@ -491,6 +491,9 @@ class _SignUpState extends State<SignUp> {
     debugPrint(_phoneNoController.text);
     debugPrint(_userController.text);
     debugPrint(_image.path);
+    debugPrint(getRole(selectedItem));
+    await _services.storeRole(selectedItem!);
+    debugPrint(selectedItem);
       var stream = http.ByteStream(DelegatingStream.typed(_image.openRead()));
       var length = await _image.length();
       var uri =Uri.parse("https://purpleapp.omkatech.com/api/register");
@@ -509,8 +512,8 @@ class _SignUpState extends State<SignUp> {
           // debugPrint(value);
           debugPrint(fromJson(json.decode(value)));
           debugPrint(getToken(json.decode(value)));
-          String checkStatus = status(json.decode(value));
-          debugPrint(checkStatus);
+          debugPrint(getRole(selectedItem));
+
           _services.storeEmail(_emailController.text);
           _services.storeToken(getToken(json.decode(value)));
           setState(() {
@@ -519,12 +522,13 @@ class _SignUpState extends State<SignUp> {
 
           if (fromJson(json.decode(value))== "User Registered Successfully |")
           {
-
             if (selectedItem == 'Service Provider' ){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
             ), (route) => false);}
             else { Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> RenterHome()
             ), (route) => false);}
           }
+          String checkStatus = status(json.decode(value));
+          debugPrint(checkStatus);
           if(checkStatus == "false"){
             debugPrint("Not added");
             String msg = fromJson(json.decode(value));
@@ -562,9 +566,9 @@ class _SignUpState extends State<SignUp> {
 
     String getRole(index){
       switch(index){
-        case 0:
+        case 'Service Provider':
           return "service";
-        case 1:
+        case 'End User':
           return "renter";
         default:
           return "renter";

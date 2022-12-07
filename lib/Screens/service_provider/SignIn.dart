@@ -91,6 +91,7 @@ class _SignInState extends State<SignIn> {
       changeButton = false;
     });
     if (status!) {
+      _services.userLoggedIn();
       print("user registered");
       if(selectedItem =="Service Provider"){ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Home()
       ), (route) => false);}
@@ -292,6 +293,8 @@ class _SignInState extends State<SignIn> {
 
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                 await _services.storeEmail(_email.text);
+                await _services.storeRole(selectedItem!);
+                debugPrint(selectedItem);
                 if (_ischecked) {
                   print("saved");
                   await _services.storeEmail(_email.text);

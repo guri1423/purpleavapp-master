@@ -36,7 +36,7 @@ class _RenterCartState extends State<RenterCart> {
   ];
 
 
-  double subTotal =0;
+  double subTotal = 0;
 
 
 
@@ -328,7 +328,7 @@ class _RenterCartState extends State<RenterCart> {
                                     ),
                                     Spacer(),
                                     Text(
-                                      "\$${getTotalAmount(subTotal, 15)}",
+                                      "\$${getTotalAmount(subTotal, 5)}",
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                         color: Color(0xff2d2d2d),
@@ -358,7 +358,8 @@ class _RenterCartState extends State<RenterCart> {
 
                             setState(() {
                               productId = [];
-                            });
+                            }
+                            );
                             },
                             child: Container(
                               width: 363,

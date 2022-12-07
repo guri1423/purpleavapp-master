@@ -111,7 +111,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
 
                                           ],
                                         ),
-                                        Spacer(),
+                                        SizedBox(width: 60,),
                                         Column(
                                           children: [
                                             Text( snapshot.data!.category!.data![index].name!,
@@ -124,7 +124,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                             ),
                                             SizedBox(height: 20,),
                                             Text(
-                                              "Rent -\$${snapshot.data!.category!.data![index].weekendPrice}",
+                                              "Rent -\$${snapshot.data!.category!.data![index].oneDayPrice}",
                                               style: TextStyle(
                                                 color: Color(0xff0a0a0a),
                                                 fontSize: 18,
@@ -138,7 +138,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: snapshot.data!.category!.data![index],)));
                                               },
                                               child: Container(
-                                                width: 186,
+                                                width: 120,
                                                 height: 26,
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(3),

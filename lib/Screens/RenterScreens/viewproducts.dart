@@ -164,34 +164,28 @@ class _ViewProductsState extends State<ViewProducts> {
                                             GestureDetector(
                                               onTap: (){
                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(model: DataCategory(
-                                                  // id: snapshot.data!.category!.data![index].id!,
-                                                  // serviceProviderId:snapshot.data!.category!.data![index].serviceProviderId,
-                                                  // model:snapshot.data!.category!.data![index].model,
-                                                  // brand:snapshot.data!.category!.data![index].model,
-                                                  // manualPdf:snapshot.data!.category!.data![index].manualPdf,
-                                                  // weekendPrice:snapshot.data!.category!.data![index].weekendPrice,
-                                                  // oneDayPrice:snapshot.data!.category!.data![index].oneDayPrice,
-                                                  // twoDayPrice:snapshot.data!.category!.data![index].twoDayPrice,
-                                                  // threeDayPrice:snapshot.data!.category!.data![index].threeDayPrice,
-                                                  // weeklyPrice:snapshot.data!.category!.data![index].weeklyPrice,
-                                                  // package1:snapshot.data!.category!.data![index].package1,
-                                                  // package2:snapshot.data!.category!.data![index].package2,
-                                                  // package1Price:snapshot.data!.category!.data![index].package1Price,
-                                                  // package2Price:snapshot.data!.category!.data![index].package2Price,
-                                                  // inventory:snapshot.data!.category!.data![index].inventory,
-                                                  // delivery:snapshot.data!.category!.data![index].delivery,
-                                                  // shippingCost:snapshot.data!.category!.data![index].shippingCost,
-                                                  // moreInfo:snapshot.data!.category!.data![index].moreInfo,
-                                                  // termsConditions:snapshot.data!.category!.data![index].termsConditions,
-                                                  // categoryId:snapshot.data!.category!.data![index].categoryId,
-                                                  // name: snapshot.data!.category!.data![index].name,
-                                                  // productImages: snapshot.data!.category!.data![index].productImages,
+                                                  // id: snapshot.data!.data[index].id,
+                                                  // serviceProviderId:snapshot.data!.data[index].serviceProviderId,
+                                                  // model:snapshot.data!.data[index].model,
+                                                  // brand:snapshot.data!.data[index].model,
+                                                  // manualPdf:snapshot.data!.data[index].manualPdf,
+                                                  // oneDayPrice:snapshot.data!.data[index].oneDayPrice,
+                                                  // inventory:snapshot.data!.data[index].inventory,
+                                                  // delivery:snapshot.data!.data[index].delivery,
+                                                  // shippingCost:snapshot.data!.data[index].shippingCost,
+                                                  // moreInfo:snapshot.data!.data[index].moreInfo,
+                                                  // termsConditions:snapshot.data!.data[index].termsConditions,
+                                                  // categoryId:snapshot.data!.data[index].categoryId,
+                                                  // name: snapshot.data!.data[index].name,
+                                                  // productImages: snapshot.data!.data[index].productImages,
 
+                                                ))
 
-                                                ) )));
+                                                )
+                                                );
                                               },
                                               child: Container(
-                                                width: 186,
+                                                width: 120,
                                                 height: 26,
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(3),

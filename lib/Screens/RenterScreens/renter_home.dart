@@ -77,6 +77,7 @@ class _RenterHomeScreenState extends State<RenterHomeScreen> {
             if (snapshot.hasData){
 
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Center(
                       child: CarouselSlider.builder(itemCount: snapshot.data!.banner.length, itemBuilder: (context, index, realIndex){
@@ -88,7 +89,7 @@ class _RenterHomeScreenState extends State<RenterHomeScreen> {
                       autoPlay: true)),
                     ),
 
-                    SizedBox(height: 10,),
+                    SizedBox(height: 8,),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -123,7 +124,7 @@ class _RenterHomeScreenState extends State<RenterHomeScreen> {
 
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 8,),
                     GestureDetector( onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => ViewProducts()));
                     },
@@ -163,9 +164,10 @@ class _RenterHomeScreenState extends State<RenterHomeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 8,),
+
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.4,
+                      height: MediaQuery.of(context).size.height*0.42,
                       width: MediaQuery.of(context).size.width,
                       child: GridView.builder(
                           shrinkWrap: true,

@@ -59,15 +59,7 @@ class DataCategory {
     this.model,
     this.brand,
     this.manualPdf,
-    this.weekendPrice,
     this.oneDayPrice,
-    this.twoDayPrice,
-    this.threeDayPrice,
-    this.weeklyPrice,
-    this.package1,
-    this.package2,
-    this.package1Price,
-    this.package2Price,
     this.inventory,
     this.delivery,
     this.shippingCost,
@@ -84,15 +76,7 @@ class DataCategory {
   String? model;
   String? brand;
   dynamic? manualPdf;
-  String? weekendPrice;
   String? oneDayPrice;
-  String? twoDayPrice;
-  String? threeDayPrice;
-  String? weeklyPrice;
-  String? package1;
-  String? package2;
-  String? package1Price;
-  String? package2Price;
   String? inventory;
   dynamic? delivery;
   String? shippingCost;
@@ -110,15 +94,7 @@ class DataCategory {
     model: json["model"],
     brand: json["brand"],
     manualPdf: json["manual_pdf"],
-    weekendPrice: json["weekend_price"],
     oneDayPrice: json["one_day_price"],
-    twoDayPrice: json["two_day_price"],
-    threeDayPrice: json["three_day_price"],
-    weeklyPrice: json["weekly_price"],
-    package1: json["package_1"],
-    package2: json["package_2"],
-    package1Price: json["package_1_price"],
-    package2Price: json["package_2_price"],
     inventory: json["inventory"],
     delivery: json["delivery"],
     shippingCost: json["shipping_cost"],
@@ -136,15 +112,7 @@ class DataCategory {
     "model": model,
     "brand": brand,
     "manual_pdf": manualPdf,
-    "weekend_price": weekendPrice,
     "one_day_price": oneDayPrice,
-    "two_day_price": twoDayPrice,
-    "three_day_price": threeDayPrice,
-    "weekly_price": weeklyPrice,
-    "package_1": package1,
-    "package_2": package2,
-    "package_1_price": package1Price,
-    "package_2_price": package2Price,
     "inventory": inventory,
     "delivery": delivery,
     "shipping_cost": shippingCost,

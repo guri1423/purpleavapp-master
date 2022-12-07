@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -54,9 +56,31 @@ Future<ReviewModel> getAllReviews() async {
 }
 
 Future<BookingModel> getAllBooking() async {
+
   String url = "https://purpleapp.omkatech.com/api/bookings";
   final response = await http.get(
     Uri.parse(url),
+  );
+  if (response.statusCode == 200 || response.statusCode == 400) {
+    print(response.body);
+
+    return bookingModelFromJson(response.body);
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
+
+Future<BookingModel> getBookingDetails(String status) async {
+
+  String url = "https://purpleapp.omkatech.com/api/status/bookings";
+  String? tokenValue = await _services.getToken();
+  debugPrint(tokenValue);
+  final response = await http.post(
+      Uri.parse(url),
+      body: {'status': status},
+      headers: {
+    'Authorization': 'Bearer $tokenValue',
+  }
   );
   if (response.statusCode == 200 || response.statusCode == 400) {
     print(response.body);
@@ -156,6 +180,43 @@ Future<bool?> userLogin(Login model) async {
   }
 }
 
+Future<bool?> logout() async{
+
+  try{String? tokenValue = await _services.getToken();
+
+  print(tokenValue);
+
+
+
+  String url = "https://purpleapp.omkatech.com/api/logout";
+
+  final response = await http.post(Uri.parse(url),
+    headers: {
+
+      'Authorization': 'Bearer $tokenValue',
+    },  );
+
+    print(response.body);
+    var jsonResponse = json.decode(response.body);
+    debugPrint('Logout tap');
+    // return jsonResponse(response.body);
+    if (jsonResponse['status']=="true"){
+      return true;}
+    else{
+      return false;
+    }
+
+
+
+  }
+  catch(e){
+    print(e);
+  }
+
+
+
+}
+
 Future<bool?> userForgotPass(ForgotPasswordService model) async {
   print(model.email);
 
@@ -250,6 +311,7 @@ Future deleteProduct(int id) async {
 }
 
 Future<bool?> editAllProduct(EditProduct model, int id) async {
+
   debugPrint(model.toJson().toString());
   String url = "https://purpleapp.omkatech.com/api/products/$id";
 
@@ -334,49 +396,65 @@ Future<GetCategoryProductModal> categorySearch(id) async {
 }
 
 Future<GetProductAddedToCartModal?> productToCart() async {
-  print("guri");
-  String url = "https://purpleapp.omkatech.com/api/cart";
-  String? tokenValue = await _services.getToken();
-  print(tokenValue);
-  print("guri");
+  try{
+    String url = "https://purpleapp.omkatech.com/api/cart";
 
-  final response = await http.get(Uri.parse(url), headers: {
-    'Authorization': 'Bearer $tokenValue',
-  });
+    String? tokenValue = await _services.getToken();
 
-  print(response.body);
+    print(tokenValue);
 
-  if (response.statusCode == 200) {
-    var jsonResponse = json.decode(response.body);
-    print(jsonResponse);
+
+    final response = await http.get(Uri.parse(url), headers: {
+      'Authorization': 'Bearer $tokenValue',
+    });
+
+    print(response.body);
 
     return getProductAddedToCartModalFromJson(response.body);
+  }
+
+  catch(e){
+    debugPrint(e.toString());
   }
 }
 
 Future<dynamic> productAddToCart( model) async {
-  debugPrint(model.toJson().toString());
+
+  try{
+    debugPrint(model.toJson().toString());
+
   String? tokenValue = await _services.getToken();
+
   debugPrint(tokenValue);
 
   String url = "https://purpleapp.omkatech.com/api/cart/store";
 
   final response =
-      await http.post(Uri.parse(url), body: model.toJson(), headers: {
+  await http.post(Uri.parse(url), body: model.toJson(), headers: {
     'Authorization': 'Bearer $tokenValue',
   });
+
+
   if (response.statusCode == 200 || response.statusCode == 400) {
     var jsonResponse = json.decode(response.body);
     debugPrint(jsonResponse["message"]);
     debugPrint(response.body);
-    if (jsonResponse["message"] == "Product Added to Cart Successfully") {
+    if(jsonResponse['status']== 'true'){
       return true;
-    } else {
+    }
+    else{
       return false;
     }
-  } else {
-    throw Exception('Failed to load data');
   }
+
+  } catch(e){
+    debugPrint(e.toString());
+  }
+
+
+
+
+
 }
 
 Future deleteFromCart(int id) async {
@@ -439,6 +517,27 @@ debugPrint(body.toString());
 
   }
 
+}
+
+Future<bool?> updateBookingStatus(int id, String returnDate) async {
+
+  String url = "https://purpleapp.omkatech.com/api/bookings/${id}";
+  String? tokenValue = await _services.getToken();
+  debugPrint(tokenValue);
+  final response = await http.post(
+      Uri.parse(url),
+      body: {'status': 'Closed', 'return_date': returnDate},
+      headers: {
+        'Authorization': 'Bearer $tokenValue',
+      }
+  );
+  if (response.statusCode == 200 || response.statusCode == 400) {
+    print(response.body);
+    Fluttertoast.showToast(msg: response.toString());
+  } else
+  {
+    throw Exception('Failed to load data');
+  }
 }
 
   Future<dynamic> deleteWholeCart() async {

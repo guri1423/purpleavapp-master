@@ -5,6 +5,10 @@ import 'package:purpleavapp/Screens/RenterScreens/MyAccount_Screen.dart';
 import 'package:purpleavapp/Screens/service_provider/SignIn.dart';
 import 'package:purpleavapp/Screens/service_provider/home.dart';
 
+import '../../Services/ApiServices.dart';
+import '../../Services/storage_services.dart';
+import '../welcom_screen.dart';
+
 class LogoutRenter extends StatefulWidget {
   const LogoutRenter({Key? key}) : super(key: key);
 
@@ -12,7 +16,11 @@ class LogoutRenter extends StatefulWidget {
   State<LogoutRenter> createState() => _LogoutRenterState();
 }
 
+
 class _LogoutRenterState extends State<LogoutRenter> {
+
+  final StorageServices _services = StorageServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -270,9 +278,22 @@ class _LogoutRenterState extends State<LogoutRenter> {
                                             borderRadius: BorderRadius.circular(4),
                                             color: Color(0xff5600d4),
                                           ),
-                                          child: GestureDetector(onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(
-                                                builder: (context) => SignIn()));
+                                          child: GestureDetector(onTap: ()async{
+                                            // _services.userLoggedOut();
+                                            // Navigator.pushReplacement(context, MaterialPageRoute(
+                                            //     builder: (context) => SignIn()));
+                                            bool ? status = await logout();
+                                            if(status!){
+                                              _services.userLoggedOut();
+
+                                              Navigator.pushReplacement(context, MaterialPageRoute(
+                                                  builder: (context) => SignIn()));
+                                              print("user logged out");
+
+
+                                            }else{
+                                              print("try again later");
+                                            }
                                           },
                                             child: Center(
                                               child: Text(

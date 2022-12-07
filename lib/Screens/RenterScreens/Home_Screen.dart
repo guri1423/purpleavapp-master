@@ -43,7 +43,7 @@ class _RenterHomeState extends State<RenterHome> {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          height:Platform.isIOS?60:80,
+          height:Platform.isIOS?55:65,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(

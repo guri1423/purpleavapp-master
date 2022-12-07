@@ -88,8 +88,6 @@ class AddCart{
     this.startDate,
     this.endDate,
     this.rentPrice,
-    this.package,
-    this.packagePrice,
     this.totalAmount,
     this.delivery,
   });
@@ -100,8 +98,6 @@ class AddCart{
   dynamic? startDate;
   dynamic? endDate;
   String? rentPrice;
-  String? package;
-  String? packagePrice;
   String? totalAmount;
   String? delivery;
 
@@ -112,8 +108,6 @@ class AddCart{
     startDate: json["start_date"],
     endDate: json["end_date"],
     rentPrice: json["rent_price"],
-    package: json["package"],
-    packagePrice: json["package_price"],
     totalAmount: json["total_amount"],
     delivery: json["delivery"],
   );
@@ -125,8 +119,6 @@ class AddCart{
     "start_date": startDate,
     "end_date": endDate,
     "rent_price": rentPrice,
-    "package": package,
-    "package_price": packagePrice,
     "total_amount": totalAmount,
     "delivery": delivery,
   };

@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:purpleavapp/Modal/post_product_model.dart';
 import 'package:purpleavapp/Screens/service_provider/My_Products.dart';
+import 'package:purpleavapp/Screens/service_provider/home.dart';
 import 'package:purpleavapp/Services/ApiServices.dart';
 import 'package:purpleavapp/Services/storage_services.dart';
 
@@ -78,26 +79,26 @@ class _AddProductsState extends State<AddProducts> {
     "Pickup",
     "Shipping"
   ];
-  FilePickerResult? _file;
 
-  Future getManual1() async {
-    final file = await FilePicker.platform.pickFiles(
+
+  FilePickerResult? _file;
+  File? pdfFile;
+  String? pdfFilePathName;
+
+  Future <String?> getManual1() async {
+   _file  = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
-    setState(() {
-      _file= file;
-    });
+    if(_file != null){
 
-    if (file != null) {
-      List<File> files = file.paths.map((path) => File(path!)).toList();
-    } else {
-      // User canceled the picker
+      pdfFile = File(_file!.files.single.path!);
+      pdfFilePathName = pdfFile!.path;
+      debugPrint(pdfFile!.path);
+      return pdfFile!.path;
     }
 
-    setState(() {
 
-    });
   }
 
   // userProductPost(GetAllProductsModel model) async {
@@ -787,79 +788,77 @@ class _AddProductsState extends State<AddProducts> {
         SizedBox(height: 5,),
 
 
-        Row(
-          children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value1,
-              onChanged: (val) {
-                setState(() {
-                  value1 = val!;
-
-
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text("Weekend Special",
-              style: TextStyle(
-                  fontSize: 16
-              ),),
-            Spacer(),
-            Text("\$",
-              style: TextStyle(
-                  fontSize: 20
-              ),),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.3,
-              child: TextField(
-                controller: _weekendPrice,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            )
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       fillColor:
+        //       MaterialStateProperty.resolveWith<Color>((states) {
+        //         if (states.contains(MaterialState.disabled)) {
+        //           return Color(0xff5600d4);
+        //         }
+        //         return Color(0xff5600d4);
+        //       }),
+        //       value: value1,
+        //       onChanged: (val) {
+        //         setState(() {
+        //           value1 = val!;
+        //
+        //
+        //         });
+        //       },
+        //
+        //     ),
+        //     SizedBox(
+        //       width: 5,
+        //     ),
+        //     Text("Weekend Special",
+        //       style: TextStyle(
+        //           fontSize: 16
+        //       ),),
+        //     Spacer(),
+        //     Text("\$",
+        //       style: TextStyle(
+        //           fontSize: 20
+        //       ),),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.3,
+        //       child: TextField(
+        //         controller: _weekendPrice,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
         SizedBox(height: 5,),
         Row(
           children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value2,
-              onChanged: (val) {
-                setState(() {
-                  value2 = val!;
+            // Checkbox(
+            //   fillColor:
+            //   MaterialStateProperty.resolveWith<Color>((states) {
+            //     if (states.contains(MaterialState.disabled)) {
+            //       return Color(0xff5600d4);
+            //     }
+            //     return Color(0xff5600d4);
+            //   }),
+            //   value: value2,
+            //   onChanged: (val) {
+            //     setState(() {
+            //       value2 = val!;
+            //
+            //
+            //     });
+            //   },
+            //
+            // ),
 
-
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 5,
-            ),
             Text("One day Price",
               style: TextStyle(
                   fontSize: 16
@@ -887,283 +886,283 @@ class _AddProductsState extends State<AddProducts> {
           ],
         ),
         SizedBox(height: 5,),
-        Row(
-          children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value3,
-              onChanged: (val) {
-                setState(() {
-                  value3 = val!;
-
-
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text("Two day Rental Price",
-              style: TextStyle(
-                  fontSize: 16
-              ),),
-            Spacer(),
-            Text("\$",
-              style: TextStyle(
-                  fontSize: 20
-              ),),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.3,
-              child: TextField(
-                controller: _twoDayPrice,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(height: 5,),
-        Row(
-          children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value4,
-              onChanged: (val) {
-                setState(() {
-                  value4 = val!;
-
-
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text("Three day Rental Price",
-              style: TextStyle(
-                  fontSize: 16
-              ),),
-            Spacer(),
-
-            Text("\$",
-              style: TextStyle(
-                  fontSize: 20
-              ),),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.3,
-              child: TextField(
-                controller: _threeDayPrice,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(height: 5,),
-        Row(
-          children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value5,
-              onChanged: (val) {
-                setState(() {
-                  value5 = val!;
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text("Weekly Rental Price",
-              style: TextStyle(
-                  fontSize: 16
-              ),),
-            Spacer(),
-            Text("\$",
-              style: TextStyle(
-                  fontSize: 20
-              ),),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.3,
-              child: TextField(
-                controller: _weeklyPrice,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(height: 5,),
-        Row(
-          children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value6,
-              onChanged: (val) {
-                setState(() {
-                  value6 = val!;
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Text("Package 1",
-              style: TextStyle(
-                  fontSize: 16
-              ),),
-            Spacer(),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.3,
-              child: TextField(
-                controller: _package1,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            ),
-            Spacer(),
-            Text("\$",
-              style: TextStyle(
-                  fontSize: 20
-              ),),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.2,
-              child: TextField(
-                controller: _package1Price,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(height: 5,),
-        Row(
-          children: [
-            Checkbox(
-              fillColor:
-              MaterialStateProperty.resolveWith<Color>((states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xff5600d4);
-                }
-                return Color(0xff5600d4);
-              }),
-              value: value7,
-              onChanged: (val) {
-                setState(() {
-                  value7 = val!;
-                });
-              },
-
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Text("Package 2",
-              style: TextStyle(
-                  fontSize: 16
-              ),),
-            Spacer(),
-
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.3,
-              child: TextField(
-                controller: _package2,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            ),
-            Spacer(),
-            Text("\$",
-              style: TextStyle(
-                  fontSize: 20
-              ),),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
-                color: Colors.white,
-              ),
-              width: MediaQuery.of(context).size.width*0.2,
-              child: TextField(
-                controller: _package2Price,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5)
-                ),
-              ),
-            )
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       fillColor:
+        //       MaterialStateProperty.resolveWith<Color>((states) {
+        //         if (states.contains(MaterialState.disabled)) {
+        //           return Color(0xff5600d4);
+        //         }
+        //         return Color(0xff5600d4);
+        //       }),
+        //       value: value3,
+        //       onChanged: (val) {
+        //         setState(() {
+        //           value3 = val!;
+        //
+        //
+        //         });
+        //       },
+        //
+        //     ),
+        //     SizedBox(
+        //       width: 5,
+        //     ),
+        //     Text("Two day Rental Price",
+        //       style: TextStyle(
+        //           fontSize: 16
+        //       ),),
+        //     Spacer(),
+        //     Text("\$",
+        //       style: TextStyle(
+        //           fontSize: 20
+        //       ),),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.3,
+        //       child: TextField(
+        //         controller: _twoDayPrice,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // SizedBox(height: 5,),
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       fillColor:
+        //       MaterialStateProperty.resolveWith<Color>((states) {
+        //         if (states.contains(MaterialState.disabled)) {
+        //           return Color(0xff5600d4);
+        //         }
+        //         return Color(0xff5600d4);
+        //       }),
+        //       value: value4,
+        //       onChanged: (val) {
+        //         setState(() {
+        //           value4 = val!;
+        //
+        //
+        //         });
+        //       },
+        //
+        //     ),
+        //     SizedBox(
+        //       width: 5,
+        //     ),
+        //     Text("Three day Rental Price",
+        //       style: TextStyle(
+        //           fontSize: 16
+        //       ),),
+        //     Spacer(),
+        //
+        //     Text("\$",
+        //       style: TextStyle(
+        //           fontSize: 20
+        //       ),),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.3,
+        //       child: TextField(
+        //         controller: _threeDayPrice,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // SizedBox(height: 5,),
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       fillColor:
+        //       MaterialStateProperty.resolveWith<Color>((states) {
+        //         if (states.contains(MaterialState.disabled)) {
+        //           return Color(0xff5600d4);
+        //         }
+        //         return Color(0xff5600d4);
+        //       }),
+        //       value: value5,
+        //       onChanged: (val) {
+        //         setState(() {
+        //           value5 = val!;
+        //         });
+        //       },
+        //
+        //     ),
+        //     SizedBox(
+        //       width: 5,
+        //     ),
+        //     Text("Weekly Rental Price",
+        //       style: TextStyle(
+        //           fontSize: 16
+        //       ),),
+        //     Spacer(),
+        //     Text("\$",
+        //       style: TextStyle(
+        //           fontSize: 20
+        //       ),),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.3,
+        //       child: TextField(
+        //         controller: _weeklyPrice,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // SizedBox(height: 5,),
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       fillColor:
+        //       MaterialStateProperty.resolveWith<Color>((states) {
+        //         if (states.contains(MaterialState.disabled)) {
+        //           return Color(0xff5600d4);
+        //         }
+        //         return Color(0xff5600d4);
+        //       }),
+        //       value: value6,
+        //       onChanged: (val) {
+        //         setState(() {
+        //           value6 = val!;
+        //         });
+        //       },
+        //
+        //     ),
+        //     SizedBox(
+        //       width: 15,
+        //     ),
+        //     Text("Package 1",
+        //       style: TextStyle(
+        //           fontSize: 16
+        //       ),),
+        //     Spacer(),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.3,
+        //       child: TextField(
+        //         controller: _package1,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     ),
+        //     Spacer(),
+        //     Text("\$",
+        //       style: TextStyle(
+        //           fontSize: 20
+        //       ),),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.2,
+        //       child: TextField(
+        //         controller: _package1Price,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // SizedBox(height: 5,),
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       fillColor:
+        //       MaterialStateProperty.resolveWith<Color>((states) {
+        //         if (states.contains(MaterialState.disabled)) {
+        //           return Color(0xff5600d4);
+        //         }
+        //         return Color(0xff5600d4);
+        //       }),
+        //       value: value7,
+        //       onChanged: (val) {
+        //         setState(() {
+        //           value7 = val!;
+        //         });
+        //       },
+        //
+        //     ),
+        //     SizedBox(
+        //       width: 15,
+        //     ),
+        //     Text("Package 2",
+        //       style: TextStyle(
+        //           fontSize: 16
+        //       ),),
+        //     Spacer(),
+        //
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.3,
+        //       child: TextField(
+        //         controller: _package2,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     ),
+        //     Spacer(),
+        //     Text("\$",
+        //       style: TextStyle(
+        //           fontSize: 20
+        //       ),),
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(4),
+        //         border: Border.all(color: Color(0xffdbdbdb), width: 1.50,),
+        //         color: Colors.white,
+        //       ),
+        //       width: MediaQuery.of(context).size.width*0.2,
+        //       child: TextField(
+        //         controller: _package2Price,
+        //         decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             contentPadding: EdgeInsets.symmetric(horizontal: 5)
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
 
         SizedBox(height: 10,),
 
@@ -1228,8 +1227,7 @@ class _AddProductsState extends State<AddProducts> {
                         fontWeight: FontWeight.w500,
                       ),),
 
-                    delivery ? Icon(Icons.keyboard_arrow_up) : Icon(
-                        Icons.keyboard_arrow_down)
+
                   ],
                 ),
               )
@@ -1389,7 +1387,7 @@ class _AddProductsState extends State<AddProducts> {
 
             setState(() {
               form = false;
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProducts()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
             });
           },
           child: Container(
@@ -1439,11 +1437,10 @@ class _AddProductsState extends State<AddProducts> {
     }
   }
 
-  void uploadImage(File _image1)async{
+  void uploadImage(File _image1, )async{
     String? tokenValue = await _services.getToken();
     debugPrint(tokenValue);
     debugPrint(_image1.path);
-    debugPrint(_file.toString());
     debugPrint(_equipment.text);
     debugPrint(_model.text);
     debugPrint(_brand.text);
@@ -1460,8 +1457,12 @@ class _AddProductsState extends State<AddProducts> {
     debugPrint(_termsAndConditons.text);
     debugPrint(_inventory.text);
     debugPrint(_delivery.text);
+
     var stream = http.ByteStream(DelegatingStream.typed(_image1.openRead()));
     var length = await _image1.length();
+
+    var pdfStream = http.ByteStream(DelegatingStream.typed(pdfFile!.openRead()));
+    var pdfLength = await pdfFile!.length();
 
     Map<String, String> headers = { "Authorization": "Bearer $tokenValue"};
     var uri =Uri.parse("https://purpleapp.omkatech.com/api/products",
@@ -1493,7 +1494,7 @@ class _AddProductsState extends State<AddProducts> {
     request.fields["city"] = _delivery.text;
     request.fields["postal_code"] = _delivery.text;
 
-    // var multipartFile= http.MultipartFile('images[]', stream, length,filename: _image1.path);
+    var multipartFilePdf = http.MultipartFile('manual_pdf', pdfStream, pdfLength, filename: pdfFilePathName );
 
     List<http.MultipartFile> newList = <http.MultipartFile>[];
 
@@ -1509,6 +1510,9 @@ class _AddProductsState extends State<AddProducts> {
       newList.add(multipartFile);
     }
     request.files.addAll(newList);
+
+    request.files.add(multipartFilePdf);
+
     await request.send().then((response) async{
 
       response.stream.transform(utf8.decoder).listen((value) async {
@@ -1530,6 +1534,8 @@ class _AddProductsState extends State<AddProducts> {
       print(e);
     });
   }
+
+
   String fromJson(Map<String, dynamic> json) =>
       json["message"];
   String status(Map<String, dynamic> json) =>

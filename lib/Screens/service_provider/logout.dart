@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:purpleavapp/Screens/service_provider/My_Account.dart';
 import 'package:purpleavapp/Screens/service_provider/SignIn.dart';
 import 'package:purpleavapp/Screens/service_provider/home.dart';
+import 'package:purpleavapp/Services/ApiServices.dart';
+
+import '../../Services/storage_services.dart';
+import '../welcom_screen.dart';
 
 class Logout extends StatefulWidget {
   const Logout({Key? key}) : super(key: key);
@@ -11,20 +15,19 @@ class Logout extends StatefulWidget {
 }
 
 class _LogoutState extends State<Logout> {
+
+  final StorageServices _services = StorageServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         backgroundColor: Color(0xff5600d4),
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector( onTap: (){
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Home()));
-            },
 
-                child: Icon(Icons.arrow_back_ios)),
             Text('Logout',
 
             ),
@@ -188,10 +191,10 @@ class _LogoutState extends State<Logout> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector( onTap: (){
-    Navigator.pop(context);
-    showDialog(context: context,
-    builder:(BuildContext context){
-    return Dialog(
+               Navigator.pop(context);
+                 showDialog(context: context,
+                     builder:(BuildContext context){
+                     return Dialog(
     shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(12),
     ),
@@ -268,9 +271,23 @@ class _LogoutState extends State<Logout> {
                   borderRadius: BorderRadius.circular(4),
                   color: Color(0xff5600d4),
                 ),
-                child: GestureDetector(onTap: (){
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => SignIn()));
+                child: GestureDetector(onTap: ()async{
+                  // _services.userLoggedOut();
+                  // Navigator.pushReplacement(context, MaterialPageRoute(
+                  //     builder: (context) => SignIn()));
+
+                  bool ? status = await logout();
+                  if(status!){
+                    _services.userLoggedOut();
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) => SignIn()));
+                    print("user logged out");
+
+
+                  }else{
+                    print("try again later");
+                  }
+
                 },
                   child: Center(
                     child: Text(
@@ -297,9 +314,9 @@ class _LogoutState extends State<Logout> {
 
     );
 
-    }
-    );
-    },
+                }
+               );
+                 },
                 child: Container(
                   decoration: BoxDecoration(
                     color: Color(0xff5600d4),
